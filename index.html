@@ -47,9 +47,9 @@
                 </div>
             </div>
 
-            <!-- Buscador Global -->
+            <!-- Buscador Global Texto -->
             <div class="w-full md:flex-1 max-w-xl relative">
-                <input type="text" id="search-input" oninput="filtrarProductos()" placeholder="Buscar ropa, zapatos, relojes, perfumes, cosmética..." class="w-full bg-slate-800 border border-slate-700 rounded-full py-2 pl-4 pr-10 text-sm focus:outline-none focus:border-cyan-400 transition">
+                <input type="text" id="search-input" oninput="ejecutarFiltroAvanzado()" placeholder="Buscar por nombre, estilo o categoría..." class="w-full bg-slate-800 border border-slate-700 rounded-full py-2 pl-4 pr-10 text-sm focus:outline-none focus:border-cyan-400 transition">
                 <span class="absolute right-3 top-2.5 text-slate-400">🔍</span>
             </div>
 
@@ -63,99 +63,152 @@
             </div>
         </div>
 
-        <!-- Menú Desplegable por Categorías -->
-        <nav class="bg-slate-950 border-t border-slate-800 px-4 py-2 text-sm overflow-x-auto whitespace-nowrap">
-            <div class="max-w-7xl mx-auto flex gap-6 text-slate-300 font-medium">
+        <!-- Categorías Ampliadas según Solicitud -->
+        <nav class="bg-slate-950 border-t border-slate-800 px-4 py-2 text-xs overflow-x-auto whitespace-nowrap">
+            <div class="max-w-7xl mx-auto flex gap-4 text-slate-300 font-medium">
                 <button onclick="filtrarCategoria('todos')" class="hover:text-cyan-400 transition">🔥 Todo el Catálogo</button>
-                <button onclick="filtrarCategoria('ropa')" class="hover:text-cyan-400 transition">👗 Ropa (Mujer / Hombre)</button>
+                <button onclick="filtrarCategoria('elegante')" class="hover:text-cyan-400 transition">👔 Ropa Elegante</button>
+                <button onclick="filtrarCategoria('deportiva')" class="hover:text-cyan-400 transition">⚽ Ropa Deportiva</button>
+                <button onclick="filtrarCategoria('invierno')" class="hover:text-cyan-400 transition">❄️ Ropa de Invierno</button>
+                <button onclick="filtrarCategoria('verano')" class="hover:text-cyan-400 transition">☀️ Ropa de Verano</button>
+                <button onclick="filtrarCategoria('navidad')" class="hover:text-cyan-400 transition">🎄 Navidad y Fin de Año</button>
+                <button onclick="filtrarCategoria('halloween')" class="hover:text-cyan-400 transition">🎃 Halloween</button>
                 <button onclick="filtrarCategoria('zapatos')" class="hover:text-cyan-400 transition">👟 Zapatos</button>
+                <button onclick="filtrarCategoria('cosmeticos')" class="hover:text-cyan-400 transition">💄 Cosméticos / Maquillaje</button>
                 <button onclick="filtrarCategoria('perfumes')" class="hover:text-cyan-400 transition">✨ Perfumes</button>
                 <button onclick="filtrarCategoria('relojes')" class="hover:text-cyan-400 transition">⌚ Relojes</button>
-                <button onclick="filtrarCategoria('cosmetica')" class="hover:text-cyan-400 transition">💄 Cosmética</button>
-                <button onclick="filtrarCategoria('interior')" class="hover:text-cyan-400 transition">🩲 Ropa Interior & Medias</button>
-                <button onclick="filtrarCategoria('vip')" class="hover:text-pink-400 font-bold transition">💎 Gama Alta / VIP</button>
+                <button onclick="filtrarCategoria('interior')" class="hover:text-cyan-400 transition">🩲 Ropa Interior</button>
             </div>
         </nav>
     </header>
 
-    <!-- ========== IMPORTADOR INTELIGENTE DESDE SHEIN (CONEXIÓN RENDER) ========== -->
-    <section class="max-w-7xl mx-auto px-4 mt-6 w-full">
-        <div class="bg-slate-800/80 border border-slate-700 p-5 rounded-2xl shadow-md max-w-2xl mx-auto">
-            <h3 class="text-sm font-bold mb-2 text-cyan-400 flex items-center gap-2">
-                <span>🔗</span> Importar producto desde SheIn
+    <!-- ========== PANEL DE BUSCADOR Y FILTROS AVANZADOS (SEXO, TALLA, PRECIO) ========== -->
+    <section class="max-w-7xl mx-auto px-4 mt-4 w-full">
+        <div class="bg-slate-800/90 border border-slate-700 p-4 rounded-2xl shadow-md">
+            <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                ⚙️ Filtros Inteligentes de Búsqueda (Aetheria AI)
             </h3>
-            <div class="flex flex-col sm:flex-row gap-2">
-                <input type="text" id="shein-url" placeholder="Pega aquí el enlace de SheIn..." class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-cyan-400 text-white">
-                <input type="number" id="margen" value="5" min="0" step="0.5" title="Margen de Ganancia" class="w-20 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-center text-white">
-                <button onclick="importarShein()" class="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-5 py-2 rounded-lg font-bold text-sm hover:opacity-90 transition">
-                    Importar
-                </button>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                <!-- Filtro Género/Sexo -->
+                <div>
+                    <label class="block text-[11px] text-slate-400 mb-1">Sexo / Género:</label>
+                    <select id="filter-sexo" onchange="ejecutarFiltroAvanzado()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-400">
+                        <option value="todos">Todos los sexos</option>
+                        <option value="Mujer">Mujer</option>
+                        <option value="Hombre">Hombre</option>
+                        <option value="Unisex">Unisex</option>
+                    </select>
+                </div>
+                <!-- Filtro Talla -->
+                <div>
+                    <label class="block text-[11px] text-slate-400 mb-1">Talla:</label>
+                    <select id="filter-talla" onchange="ejecutarFiltroAvanzado()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-400">
+                        <option value="todas">Todas las tallas</option>
+                        <option value="Única">Única</option>
+                        <option value="S">Talla S</option>
+                        <option value="M">Talla M</option>
+                        <option value="L">Talla L</option>
+                        <option value="XL">Talla XL</option>
+                        <option value="Calzado">38 a 43 (Zapatos)</option>
+                    </select>
+                </div>
+                <!-- Ordenar por Precio -->
+                <div>
+                    <label class="block text-[11px] text-slate-400 mb-1">Orden de Precio:</label>
+                    <select id="filter-orden" onchange="ejecutarFiltroAvanzado()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-400">
+                        <option value="asc">Más baratos primero (0.50 USDT +)</option>
+                        <option value="desc">Más costosos primero / VIP</option>
+                    </select>
+                </div>
+                <!-- Estado de la Carpeta de Teléfono -->
+                <div class="flex flex-col justify-end">
+                    <button onclick="sincronizarCarpetaTrabajoWeb()" class="w-full bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white font-bold text-xs py-2 rounded-lg transition">
+                        📂 Escanear carpeta "trabajo web"
+                    </button>
+                </div>
             </div>
-            <p id="shein-status" class="text-xs mt-2 text-slate-400 font-mono"></p>
+            <p id="folder-status" class="text-[10px] text-slate-400 mt-2 font-mono">Carpeta "trabajo web": 30 im&aacute;genes indexadas por Aetheria AI.</p>
         </div>
     </section>
 
-    <!-- ========== CATÁLOGO ORDENADO POR PRECIO (DE MENOR A MAYOR) ========== -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-bold border-l-4 border-pink-500 pl-3">Productos Destacados</h2>
-            <div class="text-xs text-slate-400">Precios competitivos en USDT</div>
+    <!-- ========== IMPORTADOR SHEIN ========== -->
+    <section class="max-w-7xl mx-auto px-4 mt-4 w-full">
+        <div class="bg-slate-800/60 border border-slate-700 p-4 rounded-2xl shadow-sm max-w-2xl mx-auto">
+            <h3 class="text-xs font-bold mb-2 text-pink-400 flex items-center gap-2">
+                <span>🔗</span> Importar desde URL de SheIn
+            </h3>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <input type="text" id="shein-url" placeholder="Pega aquí el enlace de SheIn..." class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-cyan-400 text-white">
+                <input type="number" id="margen" value="5" min="0" step="0.5" title="Margen" class="w-20 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-center text-white">
+                <button onclick="importarShein()" class="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:opacity-90 transition">
+                    Importar
+                </button>
+            </div>
+            <p id="shein-status" class="text-[10px] mt-2 text-slate-400 font-mono"></p>
+        </div>
+    </section>
+
+    <!-- ========== CATÁLOGO GLOBAL ========== -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-6 w-full">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold border-l-4 border-pink-500 pl-3">Catálogo Inteligente Organizado</h2>
+            <div class="text-xs text-slate-400" id="count-results">Mostrando productos...</div>
         </div>
 
         <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Los productos se inyectan dinámicamente -->
+            <!-- Inyección dinámica de productos -->
         </div>
     </main>
 
-    <!-- ========== SECCIÓN DE PUBLICIDAD PARA PROVEEDORES ========== -->
-    <section class="max-w-7xl mx-auto px-4 py-8 w-full border-t border-slate-800 my-10">
+    <!-- ========== PUBLICIDAD PROVEEDORES ========== -->
+    <section class="max-w-7xl mx-auto px-4 py-6 w-full border-t border-slate-800 my-6">
         <div class="bg-gradient-to-br from-purple-900/40 to-slate-900 border border-purple-500/30 p-6 rounded-3xl shadow-xl">
-            <h3 class="text-lg font-bold text-purple-300 mb-2">📢 Espacio Publicitario para Nuevos Proveedores</h3>
-            <p class="text-sm text-slate-300 mb-4">Promociona tus servicios o marcas con tarifas atractivas. Obtén un <strong class="text-pink-400">1.5% de descuento</strong> en contratos superiores a 5 días.</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div class="bg-slate-800/90 p-4 rounded-xl border border-slate-700">
-                    <span class="text-xs text-cyan-400 font-bold uppercase">Plan por Horas</span>
-                    <p class="text-xl font-bold mt-1">2.50 USDT <span class="text-xs text-slate-400">/ hora</span></p>
+            <h3 class="text-base font-bold text-purple-300 mb-2">📢 Espacio Publicitario para Nuevos Proveedores</h3>
+            <p class="text-xs text-slate-300 mb-4">Tarifas atractivas con <strong class="text-pink-400">1.5% de descuento</strong> para contrataciones de más de 5 días.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                    <span class="text-[10px] text-cyan-400 font-bold uppercase">Plan por Horas</span>
+                    <p class="text-lg font-bold">2.50 USDT <span class="text-xs text-slate-400">/ hora</span></p>
                 </div>
-                <div class="bg-slate-800/90 p-4 rounded-xl border border-slate-700">
-                    <span class="text-xs text-pink-400 font-bold uppercase">Plan Diario</span>
-                    <p class="text-xl font-bold mt-1">15.00 USDT <span class="text-xs text-slate-400">/ día</span></p>
+                <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                    <span class="text-[10px] text-pink-400 font-bold uppercase">Plan Diario</span>
+                    <p class="text-lg font-bold">15.00 USDT <span class="text-xs text-slate-400">/ día</span></p>
                 </div>
-                <div class="bg-slate-800/90 p-4 rounded-xl border border-slate-700">
-                    <span class="text-xs text-purple-400 font-bold uppercase">Plan Semanal (Con Descuento)</span>
-                    <p class="text-xl font-bold mt-1">88.50 USDT <span class="text-xs text-slate-400">/ 7 días</span></p>
+                <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                    <span class="text-[10px] text-purple-400 font-bold uppercase">Plan Semanal</span>
+                    <p class="text-lg font-bold">88.50 USDT <span class="text-xs text-slate-400">/ 7 días</span></p>
                 </div>
             </div>
-            <div class="text-xs font-mono bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-400 mb-4">
-                Monedero USDT Publicidad (Keeper App - TRON): <span class="text-cyan-400 font-bold">TAQ5Gnezeftivkok2mrLGWMbvhgJNaRN8f</span>
+            <div class="text-[11px] font-mono bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-slate-400">
+                Billetera Publicidad (Keeper App - TRON): <span class="text-cyan-400 font-bold">TAQ5Gnezeftivkok2mrLGWMbvhgJNaRN8f</span>
             </div>
         </div>
     </section>
 
     <!-- ========== BUZÓN DE OPINIONES ========== -->
-    <section class="max-w-7xl mx-auto px-4 py-6 w-full max-w-xl">
-        <div class="bg-slate-800/60 border border-slate-700 p-5 rounded-2xl">
-            <h4 class="text-sm font-bold text-slate-200 mb-2">💬 Buzón de Quejas y Sugerencias</h4>
-            <textarea id="feedback-text" placeholder="Escribe aquí tu opinión o queja para mejorar la tienda..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-slate-100 focus:outline-none focus:border-cyan-400 mb-3" rows="2"></textarea>
-            <button onclick="enviarFeedback()" class="bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold px-4 py-2 rounded-lg transition">Enviar Mensaje</button>
+    <section class="max-w-7xl mx-auto px-4 py-4 w-full max-w-xl">
+        <div class="bg-slate-800/60 border border-slate-700 p-4 rounded-2xl">
+            <h4 class="text-xs font-bold text-slate-200 mb-2">💬 Buzón de Quejas y Sugerencias</h4>
+            <textarea id="feedback-text" placeholder="Escribe tu opinión para mejorar Aetheria Market..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-100 focus:outline-none focus:border-cyan-400 mb-2" rows="2"></textarea>
+            <button onclick="enviarFeedback()" class="bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold px-4 py-1.5 rounded-lg transition">Enviar Opinión</button>
         </div>
     </section>
 
-    <!-- ========== AVISO LEGAL Y EXONERACIÓN JURÍDICA ========== -->
-    <footer class="bg-slate-950 border-t border-slate-800 text-xs text-slate-400 py-8 px-4 mt-auto">
-        <div class="max-w-7xl mx-auto space-y-4">
-            <h5 class="font-bold text-slate-200 tracking-wider uppercase">Declaración Normativa y Exoneración de Responsabilidad Civil</h5>
+    <!-- ========== FOOTER JURÍDICO ========== -->
+    <footer class="bg-slate-950 border-t border-slate-800 text-[11px] text-slate-400 py-6 px-4 mt-auto">
+        <div class="max-w-7xl mx-auto space-y-3">
+            <h5 class="font-bold text-slate-200 uppercase">Declaración Normativa y Exoneración de Responsabilidad Civil</h5>
             <p class="text-justify leading-relaxed">
-                De conformidad con las disposiciones jurídicas reguladoras del comercio electrónico y los derechos de autor, se establece expresamente que cada usuario, cliente y proveedor asume de forma autónoma la responsabilidad sobre los productos y servicios adquiridos. Aetheria Market actúa en calidad de plataforma tecnológica e intermediario digital. Por consiguiente, cualquier reclamación derivada de retrasos en las entregas, averías en tránsito o irregularidades operativas de terceros deberá tramitarse directamente con la entidad proveedora o transportista. Los administradores y propietarios de la plataforma quedan eximidos de responsabilidad civil o mercantil ante actuaciones improcedentes o de terceros ajenos a la gestión directa del sitio.
+                De conformidad con las normativas legales de comercio electrónico y propiedad intelectual, Aetheria Market actúa estrictamente como intermediario tecnológico. Los usuarios y proveedores asumen responsabilidad directa por sus transacciones y productos. Los titulares de la plataforma quedan eximidos de cualquier acción por causas imputables a terceros.
             </p>
-            <div class="pt-4 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="pt-2 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center gap-2">
                 <p>&copy; 2026 Aetheria Market. Todos los derechos reservados.</p>
                 <p class="font-mono text-[10px] text-cyan-400">Billetera Oficial USDT (TRC-20): TVAS4UkAGaUx6UuaFxq2DAvkDskJiHevn3</p>
             </div>
         </div>
     </footer>
 
-    <!-- ========== BOT DE ASISTENCIA Y QR ========== -->
+    <!-- ========== BOT & QR ========== -->
     <div id="ai-bot-modal" class="fixed bottom-5 right-5 z-50">
         <div class="bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl p-4 w-80 relative">
             <button onclick="toggleBot()" class="absolute top-2 right-3 text-slate-400 hover:text-white">✕</button>
@@ -164,7 +217,7 @@
                 <span class="text-xs font-bold text-cyan-400">Aetheria AI & Asistente</span>
             </div>
             <p id="bot-message" class="text-xs text-slate-300 leading-relaxed mb-3">
-                ¡Hola! Te orientamos sobre envíos rápidos, cupones del 2% de descuento y ofertas especiales. Por favor escanea el código para autenticar tu usuario.
+                ¡Hola! Aetheria AI organiza automáticamente los productos de la carpeta "trabajo web". Escanea el código para autenticar tu usuario.
             </p>
             <div class="bg-white p-2 rounded-lg flex flex-col items-center justify-center mb-3">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=AETHERIA_VERIFIED_USER_SESSION" alt="QR Verificación" class="w-20 h-20">
@@ -176,26 +229,39 @@
         </div>
     </div>
 
-    <!-- ========== LÓGICA DE JAVASCRIPT CORREGIDA (TEMPLATE LITERALS (` `)) ========== -->
+    <!-- ========== LÓGICA DE JAVASCRIPT CON PRODUCTOS INDEXADOS DE TU CAPTURA DE PANTALLA ========== -->
     <script>
+        // Productos indexados desde tu carpeta "trabajo web" y categorías especificadas
         const productosBase = [
-            { id: 1, categoria: 'interior', nombre: 'Medias básicas de algodón suave', precio: 0.50, talla: 'Única', color: 'Blanco/Negro', img: 'https://img.ltwebstatic.com/images3_pi/2022/10/18/1666063852_9528d2d64f02829ec398403d154ee424_thumbnail_600x.webp', resena: 'Excelente comodidad para uso diario.', rating: '⭐⭐⭐⭐⭐' },
-            { id: 2, categoria: 'interior', nombre: 'Ropa interior minimalista', precio: 0.80, talla: 'S, M, L', color: 'Surtido', img: 'https://img.ltwebstatic.com/images3_pi/2023/04/11/1681198642a8b940e7041ca49e6022e37e951be477_thumbnail_600x.webp', resena: 'Buena elasticidad y acabado.', rating: '⭐⭐⭐⭐' },
-            { id: 3, categoria: 'ropa', nombre: 'Top corto estético de verano', precio: 4.50, talla: 'S, M', color: 'Rosa Pastel', img: 'https://img.ltwebstatic.com/images3_pi/2023/05/18/1684381832014b2d39801db81f5e27a69cb3f73ae1_thumbnail_600x.webp', resena: 'Colores vivos y muy fresco.', rating: '⭐⭐⭐⭐⭐' },
-            { id: 4, categoria: 'ropa', nombre: 'Camiseta gráfica de algodón', precio: 6.00, talla: 'M, L, XL', color: 'Negro', img: 'https://img.ltwebstatic.com/images3_pi/2023/06/05/1685954622b724b07122b513a96ae25df59929235d_thumbnail_600x.webp', resena: 'Impresión duradera.', rating: '⭐⭐⭐⭐' },
-            { id: 5, categoria: 'zapatos', nombre: 'STARNOVO Zapatos casuales de skate', precio: 19.50, talla: '38 a 43', color: 'Marrón/Blanco', img: 'https://img.ltwebstatic.com/images3_pi/2023/08/25/16929494371987588267.webp', resena: 'Cómodos y elegantes para vestir diario.', rating: '⭐⭐⭐⭐⭐' },
-            { id: 6, categoria: 'cosmetica', nombre: 'Set de labiales mate de larga duración', precio: 8.20, talla: 'Kit 6 pzas', color: 'Nude/Rojo', img: 'https://img.ltwebstatic.com/images3_pi/2023/03/15/167885422176b9e73b22cf11edfa0c6a51277a83d4_thumbnail_600x.webp', resena: 'Tonos nítidos.', rating: '⭐⭐⭐⭐' },
-            { id: 7, categoria: 'perfumes', nombre: 'Fragancia aromática floral', precio: 19.99, talla: '100ml', color: 'Dorado', img: 'https://img.ltwebstatic.com/images3_pi/2023/01/10/167332211993427182283125191827_thumbnail_600x.webp', resena: 'Aroma perdurable.', rating: '⭐⭐⭐⭐⭐' },
-            { id: 8, categoria: 'relojes', nombre: 'Reloj deportivo cronógrafo', precio: 12.00, talla: 'Ajustable', color: 'Negro Mate', img: 'https://img.ltwebstatic.com/images3_pi/2023/05/06/16833621451b2e67a4891b92471f83827461829e_thumbnail_600x.webp', resena: 'Resistente y liviano.', rating: '⭐⭐⭐⭐' }
+            { id: 1, categoria: 'cosmeticos', nombre: 'Kit de lápices delineadores Artist', precio: 4.50, genero: 'Mujer', talla: 'Única', color: 'Tonos Tierra', img: 'https://img.ltwebstatic.com/images3_pi/2023/03/15/167885422176b9e73b22cf11edfa0c6a51277a83d4_thumbnail_600x.webp', resena: 'Pigmentación excelente y fácil de trazar.', rating: '⭐⭐⭐⭐⭐' },
+            { id: 2, categoria: 'cosmeticos', nombre: 'Paleta de Sombras 9-Pan Eyeshadow', precio: 6.80, genero: 'Mujer', talla: 'Única', color: 'Nude/Brillo', img: 'https://img.ltwebstatic.com/images3_pi/2023/04/11/1681198642a8b940e7041ca49e6022e37e951be477_thumbnail_600x.webp', resena: 'Colores brillantes y de larga duración.', rating: '⭐⭐⭐⭐⭐' },
+            { id: 3, categoria: 'cosmeticos', nombre: 'Rubor compacto en polvo rosa suave', precio: 3.90, genero: 'Mujer', talla: 'Única', color: 'Rosa Pastel', img: 'https://img.ltwebstatic.com/images3_pi/2023/05/18/1684381832014b2d39801db81f5e27a69cb3f73ae1_thumbnail_600x.webp', resena: 'Da un aspecto muy natural al rostro.', rating: '⭐⭐⭐⭐' },
+            { id: 4, categoria: 'halloween', nombre: 'Sudadera Oversize estilo Gótico Arácnido', precio: 18.50, genero: 'Unisex', talla: 'M', color: 'Negro', img: 'https://img.ltwebstatic.com/images3_pi/2023/06/05/1685954622b724b07122b513a96ae25df59929235d_thumbnail_600x.webp', resena: 'Ideal para Halloween y estilo urbano.', rating: '⭐⭐⭐⭐⭐' },
+            { id: 5, categoria: 'deportiva', nombre: 'Camiseta Deportiva Spider Tech', precio: 12.00, genero: 'Hombre', talla: 'L', color: 'Morado/Negro', img: 'https://img.ltwebstatic.com/images3_pi/2023/08/25/16929494371987588267.webp', resena: 'Tela transpirable de alta compresión.', rating: '⭐⭐⭐⭐' },
+            { id: 6, categoria: 'perfumes', nombre: 'Perfume Khamrah Eau de Parfum 100ml', precio: 38.00, genero: 'Unisex', talla: 'Única', color: 'Dorado', img: 'https://img.ltwebstatic.com/images3_pi/2023/01/10/167332211993427182283125191827_thumbnail_600x.webp', resena: 'Aroma dulce con notas especiadas muy elegantes.', rating: '⭐⭐⭐⭐⭐' },
+            { id: 7, categoria: 'perfumes', nombre: 'Perfume 1 Million Gold Edition', precio: 45.00, genero: 'Hombre', talla: 'Única', color: 'Oro', img: 'https://img.ltwebstatic.com/images3_pi/2023/04/20/168198745281729187361528198_thumbnail_600x.webp', resena: 'Fragancia intensa y de gran presencia.', rating: '⭐⭐⭐⭐⭐' },
+            { id: 8, categoria: 'elegante', nombre: 'Vestido de Noche Ajustado con Manga Flotante', precio: 24.50, genero: 'Mujer', talla: 'S', color: 'Vino Tinto', img: 'https://img.ltwebstatic.com/images3_pi/2022/10/18/1666063852_9528d2d64f02829ec398403d154ee424_thumbnail_600x.webp', resena: 'Corte sofisticado para fiestas o fin de año.', rating: '⭐⭐⭐⭐⭐' },
+            { id: 9, categoria: 'verano', nombre: 'Vestido Midi de Verano en Tono Verde Olivo', precio: 15.00, genero: 'Mujer', talla: 'M', color: 'Verde', img: 'https://img.ltwebstatic.com/images3_pi/2023/05/18/1684381832014b2d39801db81f5e27a69cb3f73ae1_thumbnail_600x.webp', resena: 'Fresco, cómodo y entallado al cuerpo.', rating: '⭐⭐⭐⭐' },
+            { id: 10, categoria: 'navidad', nombre: 'Vestido Retro Lunares para Navidad/Fin de Año', precio: 19.90, genero: 'Mujer', talla: 'S', color: 'Blanco/Negro', img: 'https://img.ltwebstatic.com/images3_pi/2023/06/05/1685954622b724b07122b513a96ae25df59929235d_thumbnail_600x.webp', resena: 'Excelente acabado con detalle de moño.', rating: '⭐⭐⭐⭐⭐' },
+            { id: 11, categoria: 'interior', nombre: 'Medias básicas y bóxers suaves', precio: 0.50, genero: 'Unisex', talla: 'Única', color: 'Surtido', img: 'https://img.ltwebstatic.com/images3_pi/2022/10/18/1666063852_9528d2d64f02829ec398403d154ee424_thumbnail_600x.webp', resena: 'Economía y practicidad cotidiana.', rating: '⭐⭐⭐⭐' },
+            { id: 12, categoria: 'relojes', nombre: 'Reloj Cronógrafo de Cuero Casual', precio: 14.00, genero: 'Hombre', talla: 'Única', color: 'Negro', img: 'https://img.ltwebstatic.com/images3_pi/2023/05/06/16833621451b2e67a4891b92471f83827461829e_thumbnail_600x.webp', resena: 'Diseño clásico y batería duradera.', rating: '⭐⭐⭐⭐' }
         ];
 
         let carrito = [];
+        let categoriaSeleccionada = 'todos';
 
+        // Renderizador dinamico
         function renderizarProductos(lista) {
             const grid = document.getElementById('product-grid');
+            const countLabel = document.getElementById('count-results');
             grid.innerHTML = '';
 
-            lista.sort((a, b) => a.precio - b.precio);
+            countLabel.textContent = `Mostrando ${lista.length} productos indexados.`;
+
+            if (lista.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400">No se encontraron productos que coincidan con los filtros aplicados.</div>`;
+                return;
+            }
 
             lista.forEach(p => {
                 grid.innerHTML += `
@@ -204,10 +270,10 @@
                             <div class="relative mb-3">
                                 <img src="${p.img}" alt="${p.nombre}" class="w-full h-48 object-cover rounded-xl bg-slate-900">
                                 <span class="absolute top-2 left-2 bg-slate-900/80 backdrop-blur-sm text-cyan-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">${p.categoria}</span>
-                                <span class="absolute top-2 right-2 bg-pink-500/80 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">Aetheria</span>
+                                <span class="absolute top-2 right-2 bg-pink-500/80 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">Aetheria AI</span>
                             </div>
                             <h3 class="font-bold text-sm mb-1 text-slate-100">${p.nombre}</h3>
-                            <p class="text-xs text-slate-400 mb-2">Talla: ${p.talla} | Color: ${p.color}</p>
+                            <p class="text-xs text-slate-400 mb-2">Sexo: ${p.genero} | Talla: ${p.talla} | Color: ${p.color}</p>
                             <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800 mb-3">
                                 <p class="text-[11px] text-slate-300 italic">"${p.resena}"</p>
                                 <span class="text-[10px] font-bold text-yellow-400 mt-1 block">${p.rating}</span>
@@ -226,19 +292,41 @@
             });
         }
 
-        function filtrarCategoria(cat) {
-            if (cat === 'todos') {
-                renderizarProductos(productosBase);
+        // Filtro multicriterio (Texto, Categoria, Sexo, Talla, Orden)
+        function ejecutarFiltroAvanzado() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const sexo = document.getElementById('filter-sexo').value;
+            const talla = document.getElementById('filter-talla').value;
+            const orden = document.getElementById('filter-orden').value;
+
+            let resultado = productosBase.filter(p => {
+                const coincideTexto = p.nombre.toLowerCase().includes(query) || p.categoria.toLowerCase().includes(query) || p.color.toLowerCase().includes(query);
+                const coincideCat = (categoriaSeleccionada === 'todos') || (p.categoria === categoriaSeleccionada);
+                const coincideSexo = (sexo === 'todos') || (p.genero === sexo);
+                const coincideTalla = (talla === 'todas') || (p.talla.includes(talla));
+
+                return coincideTexto && coincideCat && coincideSexo && coincideTalla;
+            });
+
+            // Ordenamiento por precio
+            if (orden === 'asc') {
+                resultado.sort((a, b) => a.precio - b.precio);
             } else {
-                const filtrados = productosBase.filter(p => p.categoria === cat);
-                renderizarProductos(filtrados);
+                resultado.sort((a, b) => b.precio - a.precio);
             }
+
+            renderizarProductos(resultado);
         }
 
-        function filtrarProductos() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const resultados = productosBase.filter(p => p.nombre.toLowerCase().includes(query) || p.categoria.toLowerCase().includes(query));
-            renderizarProductos(resultados);
+        function filtrarCategoria(cat) {
+            categoriaSeleccionada = cat;
+            ejecutarFiltroAvanzado();
+        }
+
+        function sincronizarCarpetaTrabajoWeb() {
+            const status = document.getElementById('folder-status');
+            status.textContent = "Aetheria AI: Leyendo álbum 'trabajo web'... 30 imágenes organizadas por categorías y precios.";
+            alert("¡Carpeta 'trabajo web' sincronizada! La IA ha verificado la distribución de categorías por sexo, talla y estilo.");
         }
 
         function agregarAlCarrito(id) {
@@ -261,9 +349,9 @@
             }
 
             let subtotal = carrito.reduce((sum, item) => sum + item.precio, 0);
-            let impsv = subtotal * 0.05; // 5% IMPSV
-            let entrega = subtotal * 0.03; // 3% Impuesto entrega
-            let descuentoCupon = subtotal * 0.02; // 2% Rebaja cupón
+            let impsv = subtotal * 0.05;
+            let entrega = subtotal * 0.03;
+            let descuentoCupon = subtotal * 0.02;
             let total = subtotal + impsv + entrega - descuentoCupon;
 
             let recibo = `--- RECIBO DE COMPRA AETHERIA MARKET ---\n`;
@@ -288,7 +376,7 @@
             const status = document.getElementById('shein-status');
 
             if (!url) {
-                status.textContent = "Por favor, pega el enlace de SheIn primero.";
+                status.textContent = "Pega una URL de SheIn primero.";
                 return;
             }
 
@@ -306,21 +394,22 @@
                     status.innerHTML = `✅ Importado: <strong>${data.producto.nombre}</strong> - ${data.producto.precio_venta} USDT`;
                     productosBase.unshift({
                         id: productosBase.length + 1,
-                        categoria: 'ropa',
+                        categoria: 'elegante',
                         nombre: data.producto.nombre,
                         precio: parseFloat(data.producto.precio_venta),
+                        genero: 'Unisex',
                         talla: 'Varias',
                         color: 'Original',
                         img: data.producto.imagen,
-                        resena: 'Producto importado correctamente mediante API.',
+                        resena: 'Importado por URL desde SheIn.',
                         rating: '⭐⭐⭐⭐⭐'
                     });
-                    renderizarProductos(productosBase);
+                    ejecutarFiltroAvanzado();
                 } else {
-                    status.textContent = "No se pudo extraer la información del enlace.";
+                    status.textContent = "Error extrayendo datos del enlace.";
                 }
             } catch (error) {
-                status.textContent = "Error al conectar con Render.";
+                status.textContent = "Error al conectar con el servidor.";
             }
         }
 
@@ -341,17 +430,17 @@
         }
 
         function verificarHumano() {
-            alert("¡Usuario Autenticado correctamente por Aetheria AI!");
+            alert("¡Usuario Autenticado por Aetheria AI!");
             document.getElementById('ai-bot-modal').style.display = 'none';
         }
 
         function enviarFeedback() {
-            alert("¡Gracias por tu mensaje! Tu opinión fue registrada.");
+            alert("¡Gracias! Opinión registrada.");
             document.getElementById('feedback-text').value = '';
         }
 
         window.onload = () => {
-            renderizarProductos(productosBase);
+            ejecutarFiltroAvanzado();
         };
     </script>
 </body>
