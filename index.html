@@ -44,7 +44,6 @@
             pointer-events: none;
             letter-spacing: 0.5px;
         }
-        /* Estilos de Ambientación Estacional IA */
         body.theme-halloween { background-color: #0b0512; }
         body.theme-halloween header { border-bottom-color: #f97316; }
         body.theme-findeano { background-color: #050b14; }
@@ -56,9 +55,7 @@
 <body id="main-body" class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-500">
 
     <!-- BANNER DE FESTIVIDAD / AMBIENTACIÓN IA -->
-    <div id="seasonal-banner" class="hidden bg-gradient-to-r from-purple-900 via-pink-600 to-amber-500 text-white text-xs font-bold text-center py-1.5 px-4 shadow-md">
-        <!-- Generado dinámicamente por la IA -->
-    </div>
+    <div id="seasonal-banner" class="hidden bg-gradient-to-r from-purple-900 via-pink-600 to-amber-500 text-white text-xs font-bold text-center py-1.5 px-4 shadow-md"></div>
 
     <!-- ========== HEADER Y NAVEGACIÓN ESTILO SHEIN/AMAZON ========== -->
     <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40">
@@ -85,9 +82,10 @@
 
             <!-- Controles Desktop -->
             <div class="hidden md:flex items-center gap-3">
-                <button onclick="iniciarTourGuiado()" class="bg-cyan-900/40 hover:bg-cyan-800/60 text-cyan-300 border border-cyan-500/40 px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                <button onclick="iniciarTourGuiado()" class="bg-cyan-900/40 hover:bg-cyan-800/60 text-cyan-300 border border-cyan-500/40 px-3 py-1.5 rounded-lg text-xs font-bold transition">
                     ❓ Tour Guiado
                 </button>
+                <button onclick="solicitarAccesoAdmin()" class="bg-slate-800 hover:bg-slate-700 p-2 rounded-lg border border-slate-700 text-xs" title="Acceso Creador">🔒 Admin</button>
                 <button onclick="toggleLang()" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-700 transition" id="lang-desk">Idioma: ES</button>
                 <button onclick="toggleDarkMode()" class="bg-slate-800 hover:bg-slate-700 p-2 rounded-lg border border-slate-700 transition">🌓</button>
                 <button id="cart-btn-desktop" onclick="toggleCartDrawer()" class="relative bg-gradient-to-r from-pink-600 to-purple-600 px-4 py-2 rounded-full font-bold text-sm flex items-center gap-2 shadow-lg hover:opacity-90 transition">
@@ -160,20 +158,17 @@
         </div>
     </section>
 
-    <!-- ========== MÓDULO ADMINISTRADOR: IMPORTADOR SHEIN CON CLAVE "Rist2026" ========== -->
-    <section class="max-w-7xl mx-auto px-4 mt-4 w-full">
-        <div class="bg-slate-800/60 border border-slate-700 p-4 rounded-2xl shadow-sm max-w-2xl mx-auto">
-            <div class="flex justify-between items-center mb-2">
-                <h3 class="text-xs font-bold text-pink-400 flex items-center gap-2">
-                    🔒 Importador SheIn API (Exclusivo Administrador)
-                </h3>
-                <span class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-slate-700">Acceso Protegido</span>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
-                <input type="password" id="shein-key" placeholder="Clave Administrador" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:border-cyan-400">
-                <input type="text" id="shein-url" placeholder="URL Producto SheIn" class="sm:col-span-2 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:border-cyan-400">
-                <button onclick="importarSheinAdmin()" class="bg-gradient-to-r from-pink-600 to-purple-600 text-white font-bold text-xs py-1.5 rounded-lg hover:opacity-90 transition">
-                    Importar
+    <!-- ========== MÓDULO OCULTO PARA ADMINISTRADOR (SHEIN EXTRACTOR CON CLAVE "Rist2026") ========== -->
+    <section id="admin-panel" class="max-w-7xl mx-auto px-4 mt-4 w-full hidden">
+        <div class="bg-pink-950/40 border border-pink-500/50 p-4 rounded-2xl shadow-md max-w-2xl mx-auto">
+            <h3 class="text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
+                <span>🔒 Módulo Exclusivo Creador / Administrador (SheIn Importer)</span>
+                <button onclick="cerrarPanelAdmin()" class="text-slate-400 hover:text-white">✕</button>
+            </h3>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <input type="text" id="shein-url" placeholder="Pega URL de SheIn..." class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:border-cyan-400">
+                <button onclick="importarSheinAdmin()" class="bg-gradient-to-r from-pink-600 to-purple-600 text-white font-bold text-xs px-4 py-2 rounded-lg transition">
+                    Procesar URL
                 </button>
             </div>
             <p id="shein-status" class="text-[10px] mt-2 text-slate-400 font-mono"></p>
@@ -190,7 +185,7 @@
                 ¿Deseas adquirir un artículo en SheIn pero no dispones de tarjeta en divisas fiat? Copia el enlace del producto en SheIn y pégalo en este buzón. Nuestro equipo procesará el pago directo en dólares y te lo enviaremos a tu dirección. Pagas el importe en USDT con un <strong class="text-cyan-400">35% de cargo de gestión operacional</strong> sobre el costo original de SheIn.
             </p>
             <div class="flex flex-col sm:flex-row gap-2">
-                <input type="text" id="encargo-url" placeholder="Pega aquí el link del artículo de SheIn que deseas encarar..." class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+                <input type="text" id="encargo-url" placeholder="Pega aquí el link del artículo de SheIn que deseas encargar..." class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
                 <button onclick="enviarEncargoShein()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs px-4 py-2 rounded-lg transition">
                     Solicitar Encargo
                 </button>
@@ -206,7 +201,7 @@
         </div>
 
         <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Inyección dinámica -->
+            <!-- Inyección dinámica con backticks -->
         </div>
     </main>
 
@@ -221,11 +216,9 @@
         </div>
 
         <!-- Lista de ítems en carrito -->
-        <div id="cart-drawer-items" class="flex-1 overflow-y-auto p-4 space-y-3">
-            <!-- Inyectado por JS -->
-        </div>
+        <div id="cart-drawer-items" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
 
-        <!-- Formulario de datos de envío y desglose final -->
+        <!-- Formulario de datos de envío y pago USDT TRC-20 -->
         <div class="p-4 bg-slate-950 border-t border-slate-800 space-y-3">
             <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 text-[11px] space-y-2">
                 <h4 class="font-bold text-slate-200">📦 Datos del Destinatario:</h4>
@@ -241,17 +234,21 @@
             </div>
 
             <!-- Desglose Financiero -->
-            <div id="cart-drawer-summary" class="bg-slate-900 p-3 rounded-xl border border-slate-800 text-xs font-mono space-y-1 text-slate-300">
-                <!-- Se llena con JS -->
+            <div id="cart-drawer-summary" class="bg-slate-900 p-3 rounded-xl border border-slate-800 text-xs font-mono space-y-1 text-slate-300"></div>
+
+            <div class="bg-slate-900/90 p-2.5 rounded-xl border border-slate-700 text-[10px] font-mono text-slate-300 flex flex-col items-center">
+                <span class="text-cyan-400 font-bold mb-1">Billetera Oficial Pago USDT (Red TRON - TRC20):</span>
+                <span class="bg-slate-950 px-2 py-1 rounded border border-slate-800 text-cyan-300 select-all font-bold">TVAS4UkAGaUx6UuaFxq2DAvkDskJiHevn3</span>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=TVAS4UkAGaUx6UuaFxq2DAvkDskJiHevn3" alt="QR TRC20" class="w-20 h-20 bg-white p-1 rounded mt-2">
             </div>
 
             <button onclick="confirmarCompraFinal()" class="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:opacity-90 text-white font-bold text-xs py-3 rounded-xl transition shadow-lg">
-                Confirmar Orden y Generar Factura USDT
+                Generar Recibo de Pago Oficial
             </button>
         </div>
     </aside>
 
-    <!-- ========== MODAL DETALLE DE PRODUCTO CON REVISIONES Y SELECCIÓN DE VARIANTES ========== -->
+    <!-- ========== MODAL DETALLE DE PRODUCTO CON VARIANTES Y REVISIONES ========== -->
     <div id="detail-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-slate-800 border border-slate-700 rounded-3xl p-6 w-full max-w-2xl shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="cerrarDetalle()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-xl z-10">✕</button>
@@ -270,9 +267,8 @@
                         <h3 id="detail-title" class="text-lg font-bold text-white mt-2 mb-1">Nombre</h3>
                         <p id="detail-price" class="text-xl font-extrabold text-cyan-400 mb-2">0.00 USDT</p>
 
-                        <!-- Advertencia Derecho Cancelación -->
                         <div class="bg-amber-500/10 border border-amber-500/30 p-2 rounded-lg text-[10px] text-amber-300 mb-3">
-                            ⚠️ <strong>Derecho a Cancelación:</strong> Dispones de 24 horas tras el pago para cancelar tu orden con un reembolso integro deduciendo únicamente un 2% por gastos operacionales.
+                            ⚠️ <strong>Derecho a Cancelación:</strong> Dispones de 24 horas tras el pago para cancelar tu orden con reembolso deduciendo un 2% por comisión operacional.
                         </div>
 
                         <div class="mb-3">
@@ -285,12 +281,11 @@
                             <div id="detail-colores-container" class="flex flex-wrap gap-2"></div>
                         </div>
 
-                        <!-- Lista de Comentarios y Cuadro para Añadir -->
+                        <!-- Sección de Comentarios Protegida -->
                         <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700 mb-4">
                             <span class="text-[11px] font-bold text-yellow-400 block mb-1">⭐ Valoraciones de Compradores:</span>
                             <div id="detail-reviews" class="space-y-1 max-h-24 overflow-y-auto text-[10px] text-slate-300 mb-2"></div>
                             
-                            <!-- Formulario Comentario -->
                             <div class="pt-2 border-t border-slate-800">
                                 <textarea id="new-comment-text" maxlength="300" placeholder="Escribe tu valoración (máx 300 caracteres)..." class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-[10px] text-white focus:outline-none focus:border-cyan-400" rows="2"></textarea>
                                 <button onclick="publicarComentarioUsuario()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold text-[10px] py-1 rounded transition mt-1">
@@ -379,77 +374,110 @@
         </div>
     </div>
 
-    <!-- ========== LÓGICA DE JAVASCRIPT MASTER: IA AMBIENTAL, CARRITO AVANZADO Y FILTROS STRICTS ========== -->
+    <!-- ========== LÓGICA JAVASCRIPT CON RUTAS EXACTAS A TU CARPETA IMG ========== -->
     <script>
-        // LISTA DE PRODUCTOS BASE (Solo imágenes con nombres legibles, ignorando las que inician por "IMG")
+        // LISTA VINCULADA EXACTAMENTE A TUS FOTOS DE LA CARPETA Img/
         const productosBase = [
             {
-                id: 1, categoria: 'perfumes', nombre: 'Perfume Árabe Exclusivo Colección Oro', precio: 38.00, genero: 'Unisex', talla: 'Única', color: 'Dorado',
-                imgMain: 'perfume arabe.jpg', galerias: ['perfume arabe.jpg', 'perfume7.jpg', 'perfume8.jpg'],
-                tallasDisponibles: ['100ml'], coloresDisponibles: ['Edición Ámbar'],
-                resenas: ['Aroma profundo e imponente que dura más de 12 horas.', 'Excelente presentación.']
+                id: 1, categoria: 'ropa', nombre: 'Jeans de Ancho Claro Estilo Urbano', precio: 16.50, genero: 'Mujer', talla: 'M', color: 'Azul Claro',
+                imgMain: 'Img/Jeans ancho claro.jpg', galerias: ['Img/Jeans ancho claro.jpg', 'Img/Jeans corte moderno.jpg'],
+                tallasDisponibles: ['S', 'M', 'L'], coloresDisponibles: ['Azul Claro', 'Azul Hielo'],
+                resenas: ['Corte perfecto y mezclilla muy cómoda.', 'Llegó en perfecto estado.']
             },
             {
-                id: 2, categoria: 'perfumes', nombre: 'Perfume de Lujo Edición Cítrica', precio: 42.00, genero: 'Hombre', talla: 'Única', color: 'Naranja / Azul',
-                imgMain: 'perfume7.jpg', galerias: ['perfume7.jpg', 'perfume9.jpg'],
-                tallasDisponibles: ['100ml'], coloresDisponibles: ['Frasco Cítrico'],
-                resenas: ['Notas frescas ideales para el uso diario.', 'Envase impecable.']
+                id: 2, categoria: 'ropa', nombre: 'Jeans de Corte Moderno Entallado', precio: 18.00, genero: 'Mujer', talla: 'L', color: 'Denim',
+                imgMain: 'Img/Jeans corte moderno.jpg', galerias: ['Img/Jeans corte moderno.jpg', 'Img/Jeans ancho claro.jpg'],
+                tallasDisponibles: ['M', 'L', 'XL'], coloresDisponibles: ['Azul Denim', 'Negro'],
+                resenas: ['Muy entallado y de excelente calidad.', 'Me encantó la tela.']
             },
             {
-                id: 3, categoria: 'perfumes', nombre: 'Perfume Floral Edición 8', precio: 35.00, genero: 'Mujer', talla: 'Única', color: 'Rosa',
-                imgMain: 'perfume8.jpg', galerias: ['perfume8.jpg', 'perfume 10.jpg'],
-                tallasDisponibles: ['100ml'], coloresDisponibles: ['Rosa Pastel'],
-                resenas: ['Aroma suave que perdura mucho tiempo en ropa.', 'Fijación de alta gama.']
+                id: 3, categoria: 'deportiva', nombre: 'Playera Chica Gym Deportiva Compresión', precio: 8.50, genero: 'Mujer', talla: 'S', color: 'Verde / Negro',
+                imgMain: 'Img/Playera chica gym.jpg', galerias: ['Img/Playera chica gym.jpg'],
+                tallasDisponibles: ['S', 'M'], coloresDisponibles: ['Verde Fit', 'Negro Tech'],
+                resenas: ['Ideal para entrenar duro, super transpirable.', 'Secado rápido excelente.']
             },
             {
-                id: 4, categoria: 'interior', nombre: 'Ropa Interior de Hombre Ergonómica', precio: 0.95, genero: 'Hombre', talla: 'M', color: 'Surtido',
-                imgMain: 'ropa interior de hombre.jpg', galerias: ['ropa interior de hombre.jpg', 'ropa interior hombre clasico.jpg'],
-                tallasDisponibles: ['M', 'L', 'XL'], coloresDisponibles: ['Gris', 'Azul', 'Negro'],
-                resenas: ['Cómoda, fresca y de excelente ajuste.', 'Algodón suave al tacto.']
+                id: 4, categoria: 'interior', nombre: 'Ropa Interior de Mujer Confortable', precio: 0.80, genero: 'Mujer', talla: 'S', color: 'Multicolor',
+                imgMain: 'Img/Ropa interior mujer.jpg', galerias: ['Img/Ropa interior mujer.jpg', 'Img/conjunto de ropa interior.jpg'],
+                tallasDisponibles: ['S', 'M', 'L'], coloresDisponibles: ['Nude', 'Blanco', 'Rosa'],
+                resenas: ['Excelente calidad a precio inigualable de menos de 1 USDT.', 'Costuras suaves.']
             },
             {
-                id: 5, categoria: 'interior', nombre: 'Ropa Interior Moderna Seamless', precio: 0.80, genero: 'Mujer', talla: 'S', color: 'Nude',
-                imgMain: 'ropa interior moderna.jpg', galerias: ['ropa interior moderna.jpg', 'ropa interior mujer fina.jpg', 'ropa interior mujer elegante.jpg'],
-                tallasDisponibles: ['S', 'M', 'L'], coloresDisponibles: ['Nude', 'Blanco', 'Negro'],
-                resenas: ['Invisibles bajo prendas ajustadas.', 'Elasticidad durable.']
+                id: 5, categoria: 'deportiva', nombre: 'Shorts de Hombre Deportivos Casuales', precio: 7.20, genero: 'Hombre', talla: 'M', color: 'Gris Oscuro',
+                imgMain: 'Img/Shorts hombre.jpg', galerias: ['Img/Shorts hombre.jpg'],
+                tallasDisponibles: ['M', 'L', 'XL'], coloresDisponibles: ['Gris', 'Negro'],
+                resenas: ['Súper frescos y cómodos con bolsillos profundos.', 'Resistentes para correr.']
             },
             {
-                id: 6, categoria: 'interior', nombre: 'Conjunto de Ropa Interior Elegante', precio: 1.20, genero: 'Mujer', talla: 'S', color: 'Negro',
-                imgMain: 'conjunto de ropa interior.jpg', galerias: ['conjunto de ropa interior.jpg', 'ropa interior estampados.jpg'],
-                tallasDisponibles: ['S', 'M', 'L'], coloresDisponibles: ['Negro Encaje', 'Rojo Pasión'],
-                resenas: ['Diseño hermoso con acabados finos.', 'Copa suave.']
+                id: 6, categoria: 'zapatos', nombre: 'Zapatillas Deportivas GJ Urban', precio: 24.90, genero: 'Unisex', talla: '41', color: 'Blanco / Negro',
+                imgMain: 'Img/Zapatillas GJ.jpg', galerias: ['Img/Zapatillas GJ.jpg', 'Img/Zapatillas.jpg'],
+                tallasDisponibles: ['39', '40', '41', '42'], coloresDisponibles: ['Blanco/Negro', 'Gris'],
+                resenas: ['Amortiguación increíble para uso diario.', 'Suela antiderrapante sólida.']
             },
             {
-                id: 7, categoria: 'ropa', nombre: 'Playera Casual Algodón Premium', precio: 6.50, genero: 'Unisex', talla: 'M', color: 'Surtido',
-                imgMain: 'playera.jpg', galerias: ['playera.jpg', 'ropa de mujer.jpg'],
-                tallasDisponibles: ['S', 'M', 'L', 'XL'], coloresDisponibles: ['Negro', 'Blanco', 'Vino'],
-                resenas: ['Tela suave que no encoge.', 'Corte moderno.']
+                id: 7, categoria: 'zapatos', nombre: 'Zapatillas Casuales Blancas', precio: 22.00, genero: 'Unisex', talla: '40', color: 'Blanco Puro',
+                imgMain: 'Img/Zapatillas.jpg', galerias: ['Img/Zapatillas.jpg', 'Img/Zapatillas GJ.jpg'],
+                tallasDisponibles: ['38', '39', '40', '41'], coloresDisponibles: ['Blanco'],
+                resenas: ['Lucen ejecutivas y juveniles a la vez.', 'Fáciles de limpiar.']
             },
             {
-                id: 8, categoria: 'ropa', nombre: 'Pantalón Ancho de Mujer Estilo Urbano', precio: 16.50, genero: 'Mujer', talla: 'M', color: 'Azul Denim',
-                imgMain: 'pantalón ancho de mujer.jpg', galerias: ['pantalón ancho de mujer.jpg', 'Jeans ancho claro.jpg', 'Jeans corte moderno.jpg'],
-                tallasDisponibles: ['S', 'M', 'L'], coloresDisponibles: ['Denim Claro', 'Azul Oscuro'],
-                resenas: ['Comodidad total en tendencia.', 'Talla justa.']
+                id: 8, categoria: 'zapatos', nombre: 'Zapatos de Vestir Ejecutivos de Cuero', precio: 29.50, genero: 'Hombre', talla: '42', color: 'Negro Brillante',
+                imgMain: 'Img/Zapato de vestir.jpg', galerias: ['Img/Zapato de vestir.jpg'],
+                tallasDisponibles: ['40', '41', '42', '43'], coloresDisponibles: ['Negro', 'Marrón'],
+                resenas: ['Elegantes y muy cómodos para reuniones de trabajo.', 'Cuero suave.']
             },
             {
-                id: 9, categoria: 'ropa', nombre: 'Mono Moderno Casual Urbano', precio: 18.00, genero: 'Unisex', talla: 'M', color: 'Gris / Negro',
-                imgMain: 'monos de hombre.jpg', galerias: ['monos de hombre.jpg', 'monos de chica.jpg', 'mono moderno.jpg'],
-                tallasDisponibles: ['S', 'M', 'L', 'XL'], coloresDisponibles: ['Gris Urbano', 'Negro'],
-                resenas: ['Estilo vanguardista para salidas o entrenamiento.', 'Resistente.']
+                id: 9, categoria: 'elegante', nombre: 'Abrigo Elegante Chica Edición Gala', precio: 32.00, genero: 'Mujer', talla: 'M', color: 'Camel / Beige',
+                imgMain: 'Img/abrigo elegante chica.jpg', galerias: ['Img/abrigo elegante chica.jpg', 'Img/abrigos.jpg'],
+                tallasDisponibles: ['S', 'M', 'L'], coloresDisponibles: ['Camel', 'Negro Noche'],
+                resenas: ['Viste muchísimo y protege del viento frío.', 'Acabados de diseñador.']
+            },
+            {
+                id: 10, categoria: 'invierno', nombre: 'Abrigos Térmicos Unisex de Invierno', precio: 28.00, genero: 'Unisex', talla: 'L', color: 'Gris Térmico',
+                imgMain: 'Img/abrigos.jpg', galerias: ['Img/abrigos.jpg', 'Img/abrigo elegante chica.jpg'],
+                tallasDisponibles: ['M', 'L', 'XL'], coloresDisponibles: ['Gris', 'Verde Olivo'],
+                resenas: ['Cálidos e impermeables.', 'Relación calidad-precio fantástica.']
+            },
+            {
+                id: 11, categoria: 'interior', nombre: 'Conjunto de Ropa Interior Fina', precio: 1.20, genero: 'Mujer', talla: 'S', color: 'Negro Encaje',
+                imgMain: 'Img/conjunto de ropa interior.jpg', galerias: ['Img/conjunto de ropa interior.jpg', 'Img/Ropa interior mujer.jpg'],
+                tallasDisponibles: ['S', 'M'], coloresDisponibles: ['Negro', 'Vino'],
+                resenas: ['Diseño delicado y muy cómodo.', 'Horma perfecta.']
+            },
+            {
+                id: 12, categoria: 'festivo', nombre: 'Disfraz Festivo Temático Especial', precio: 19.90, genero: 'Unisex', talla: 'M', color: 'Surtido Festivo',
+                imgMain: 'Img/disfraz.jpg', galerias: ['Img/disfraz.jpg'],
+                tallasDisponibles: ['S', 'M', 'L'], coloresDisponibles: ['Edición Halloween', 'Fiesta'],
+                resenas: ['Super divertido para eventos de fin de año o halloween.', 'Tela cómoda.']
+            },
+            {
+                id: 13, categoria: 'ropa', nombre: 'Mono Moderno Urbano Casual', precio: 17.50, genero: 'Unisex', talla: 'M', color: 'Gris Tech',
+                imgMain: 'Img/mono moderno.jpg', galerias: ['Img/mono moderno.jpg', 'Img/monos de chica.jpg', 'Img/monos de hombre.jpg'],
+                tallasDisponibles: ['S', 'M', 'L'], coloresDisponibles: ['Gris', 'Negro'],
+                resenas: ['Comodidad total para el fin de semana.', 'Resistente.']
+            },
+            {
+                id: 14, categoria: 'ropa', nombre: 'Monos Deportivos para Chica', precio: 16.00, genero: 'Mujer', talla: 'S', color: 'Rosa Pastel',
+                imgMain: 'Img/monos de chica.jpg', galerias: ['Img/monos de chica.jpg', 'Img/mono moderno.jpg'],
+                tallasDisponibles: ['XS', 'S', 'M'], coloresDisponibles: ['Rosa', 'Negro'],
+                resenas: ['Ajuste hermosísimo al cuerpo.', 'Muy suave al tacto.']
+            },
+            {
+                id: 15, categoria: 'ropa', nombre: 'Monos de Hombre Estilo Runner', precio: 18.50, genero: 'Hombre', talla: 'XL', color: 'Negro',
+                imgMain: 'Img/monos de hombre.jpg', galerias: ['Img/monos de hombre.jpg', 'Img/mono moderno.jpg'],
+                tallasDisponibles: ['M', 'L', 'XL'], coloresDisponibles: ['Negro', 'Azul Marino'],
+                resenas: ['Bolsillos con cierre de seguridad muy útiles.', 'No pierde color al lavar.']
             }
         ];
 
-        // ESTADO GLOBAL
         let carrito = [];
         let categoriaSeleccionada = 'todos';
         let productoSeleccionadoDetalle = null;
         let tallaSeleccionadaActual = '';
         let colorSeleccionadoActual = '';
 
-        // PALABRAS PROHIBIDAS FILTRADAS POR IA EN COMENTARIOS (PUNTO 15)
         const palabrasProhibidas = ['estafa', 'robo', 'engaño', 'mentira', 'fraude', 'estafadores', 'ladrones', 'basura'];
 
-        // Detección de festividad por la IA (Punto 17)
         function detectarFestividadAmbiental() {
             const fecha = new Date();
             const mes = fecha.getMonth() + 1;
@@ -461,31 +489,31 @@
 
             if (mes === 10 && dia >= 20 || mes === 11 && dia <= 2) {
                 body.className = 'theme-halloween text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-500';
-                banner.innerHTML = '🎃 Ambientación Especial Aetheria: ¡Descuentos de Halloween Activados! Envíos rápidos en prendas festivas.';
+                banner.innerHTML = '🎃 Ambientación Especial Aetheria: ¡Descuentos de Halloween Activados! Envíos rápidos en disfraces y prendas festivas.';
             } else if (mes === 12 || (mes === 1 && dia <= 6)) {
                 body.className = 'theme-findeano text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-500';
-                banner.innerHTML = '🎄 Ofertas de Fin de Año y Navidad Aetheria: ¡Cupón del 2% y portes con descuento especial!';
+                banner.innerHTML = '🎄 Ofertas de Fin de Año Aetheria: ¡Cupón del 2% y portes rebajados!';
             } else if (mes === 2 && dia >= 10 && dia <= 16) {
                 body.className = 'theme-sanvalentin text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-500';
-                banner.innerHTML = '💖 Especial 14 de Febrero: Perfumes y Joyería Exclusiva en Oferta con Entregas Exprés.';
+                banner.innerHTML = '💖 Especial 14 de Febrero: Perfumes y Joyería Exclusiva con Entregas Exprés.';
             } else {
                 banner.classList.add('hidden');
             }
         }
 
-        // RENDERIZADO DE CATÁLOGO (FILTRO STRICTO PARA NO MOSTRAR IMÁGENES "IMG-")
+        // RENDERIZADO CON TEMPLATE LITERALS CORREGIDOS (SIN MOSTRAR {p.name} O TEXTO PLANO)
         function renderizarProductos(lista) {
             const grid = document.getElementById('product-grid');
             const countLabel = document.getElementById('count-results');
             grid.innerHTML = '';
 
-            // Filtrar estrictamente cualquier producto cuya imagen inicie por "IMG-"
-            const listaValida = lista.filter(p => !p.imgMain.startsWith('IMG-') && !p.imgMain.startsWith('img/IMG-'));
+            // Filtro estricto para ignorar archivos que comiencen por IMG o Screenshot
+            const listaValida = lista.filter(p => !p.imgMain.includes('IMG-') && !p.imgMain.includes('Screenshot'));
 
-            countLabel.textContent = `Mostrando ${listaValida.length} productos verificados.`;
+            countLabel.textContent = `Mostrando ${listaValida.length} productos verificados en carpeta Img.`;
 
             if (listaValida.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400">No hay productos disponibles en esta selección.</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400">No hay productos en esta categoría.</div>`;
                 return;
             }
 
@@ -504,14 +532,14 @@
                             <h3 class="font-bold text-sm mb-1 text-slate-100 group-hover:text-cyan-400 transition">${p.nombre}</h3>
                             <p class="text-xs text-slate-400 mb-2">Talla: ${p.talla} | Color: ${p.color}</p>
                             <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800 mb-3">
-                                <span class="text-[10px] font-bold text-yellow-400 block mb-1">⭐ Valoraciones:</span>
+                                <span class="text-[10px] font-bold text-yellow-400 block mb-1">⭐ Reseñas Verificadas:</span>
                                 ${resenasHTML}
                             </div>
                         </div>
                         <div>
                             <div class="flex items-baseline justify-between mb-3">
                                 <span class="text-cyan-400 font-extrabold text-lg">${p.precio.toFixed(2)} USDT</span>
-                                <span class="text-[10px] text-slate-400">Detalles & Tallas 🔍</span>
+                                <span class="text-[10px] text-slate-400">Ver Opciones 🔍</span>
                             </div>
                             <button onclick="event.stopPropagation(); agregarAlCarritoDirecto(${p.id})" class="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:opacity-90 text-white text-xs font-bold py-2 rounded-xl transition shadow-lg">
                                 Añadir al Carrito
@@ -522,7 +550,6 @@
             });
         }
 
-        // VER DETALLE Y AMPLIALIZACIÓN (PUNTO 14)
         function verDetalleProducto(id) {
             const p = productosBase.find(prod => prod.id === id);
             if (!p) return;
@@ -535,7 +562,6 @@
             document.getElementById('detail-title').textContent = p.nombre;
             document.getElementById('detail-price').textContent = `${p.precio.toFixed(2)} USDT`;
 
-            // Tallas
             let tallasHTML = '';
             p.tallasDisponibles.forEach((t, idx) => {
                 let active = idx === 0 ? 'border-cyan-400 bg-cyan-950' : '';
@@ -543,7 +569,6 @@
             });
             document.getElementById('detail-tallas-container').innerHTML = tallasHTML;
 
-            // Colores
             let coloresHTML = '';
             p.coloresDisponibles.forEach((c, idx) => {
                 let active = idx === 0 ? 'border-pink-400 bg-pink-950' : '';
@@ -551,7 +576,6 @@
             });
             document.getElementById('detail-colores-container').innerHTML = coloresHTML;
 
-            // Comentarios
             renderizarComentariosModal();
 
             document.getElementById('btn-add-detail').onclick = () => {
@@ -580,7 +604,6 @@
             document.getElementById('detail-reviews').innerHTML = reviewsHTML;
         }
 
-        // PUBLICAR COMENTARIOS Y FILTRADO DE PALABRAS PROHIBIDAS IA (PUNTO 15)
         function publicarComentarioUsuario() {
             const input = document.getElementById('new-comment-text');
             let texto = input.value.trim();
@@ -594,7 +617,7 @@
             const contieneOfensa = palabrasProhibidas.some(palabra => textoMinuscula.includes(palabra));
 
             if (contieneOfensa) {
-                alert("🤖 Filtro Aetheria AI: Tu comentario ha sido bloqueado por contener términos ofensivos o no permitidos en la plataforma.");
+                alert("🤖 Filtro Aetheria AI: Tu comentario ha sido eliminado por contener términos inapropiados o prohibidos.");
                 input.value = '';
                 return;
             }
@@ -609,7 +632,6 @@
             document.getElementById('detail-modal').classList.add('hidden');
         }
 
-        // FUNCIONES DEL CARRITO DESLIZABLE (DRAWER) COMPLETO Y FUNCIONAL
         function toggleCartDrawer() {
             const drawer = document.getElementById('cart-drawer');
             const backdrop = document.getElementById('cart-drawer-backdrop');
@@ -638,7 +660,6 @@
             }
             actualizarCarritoDrawerUI();
             
-            // Animación Botón
             const btnCart = document.getElementById('cart-btn-desktop');
             btnCart.classList.add('animate-cart');
             setTimeout(() => btnCart.classList.remove('animate-cart'), 1500);
@@ -690,7 +711,6 @@
                 `;
             });
 
-            // Cálculos Financieros
             let subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
             let tipoEnvio = document.getElementById('envio-tipo').value;
             let costoEnvioPorcentaje = tipoEnvio === 'expres' ? 0.08 : 0.03;
@@ -712,7 +732,6 @@
             `;
         }
 
-        // CONFIRMACIÓN Y EMISIÓN DE RECIBO FINAL
         function confirmarCompraFinal() {
             let nombre = document.getElementById('envio-nombre').value.trim();
             let edad = document.getElementById('envio-edad').value.trim();
@@ -761,7 +780,20 @@
             actualizarCarritoDrawerUI();
         }
 
-        // ENCARGO SHEIN CON USDT (PUNTO 18)
+        function solicitarAccesoAdmin() {
+            const clave = prompt("Ingresa la clave de Administrador para abrir el panel:");
+            if (clave === "Rist2026") {
+                document.getElementById('admin-panel').classList.remove('hidden');
+                alert("🔓 Panel de Administrador activado.");
+            } else if (clave !== null) {
+                alert("❌ Clave incorrecta.");
+            }
+        }
+
+        function cerrarPanelAdmin() {
+            document.getElementById('admin-panel').classList.add('hidden');
+        }
+
         function enviarEncargoShein() {
             const url = document.getElementById('encargo-url').value.trim();
             if (!url) {
@@ -772,16 +804,9 @@
             document.getElementById('encargo-url').value = '';
         }
 
-        // IMPORTADOR ADMINISTRADOR CON CLAVE "Rist2026" (PUNTO 12)
         async function importarSheinAdmin() {
-            const key = document.getElementById('shein-key').value.trim();
             const url = document.getElementById('shein-url').value.trim();
             const status = document.getElementById('shein-status');
-
-            if (key !== 'Rist2026') {
-                status.textContent = "❌ Clave de administrador incorrecta.";
-                return;
-            }
 
             if (!url) {
                 status.textContent = "Ingresa la URL del producto de SheIn.";
@@ -810,9 +835,8 @@
             } catch (e) { status.textContent = "Error de conexión con el backend en Render."; }
         }
 
-        // TOUR GUIADO DEL BOT INTERACTIVO
         function iniciarTourGuiado() {
-            alert("🤖 Tour Guiado Aetheria:\n1. Usa el menú superior para ver categorías.\n2. Haz clic sobre cualquier producto para ampliar la imagen, ver reseñas o dejar tu opinión.\n3. Abre el carrito flotante arriba a la derecha para modificar cantidades o ingresar tus datos de envío.");
+            alert("🤖 Tour Guiado Aetheria:\n1. Usa el menú superior para ver categorías.\n2. Haz clic sobre cualquier producto para ampliar la imagen, ver reseñas o dejar tu opinión.\n3. Abre el carrito flotante arriba a la derecha para modificar cantidades, llenar los datos de envío y obtener la dirección o QR de pago USDT.");
         }
 
         function ejecutarFiltroAvanzado() {
@@ -846,7 +870,7 @@
         }
 
         function sincronizarIA() {
-            alert("¡Sincronización por IA completada! Las imágenes que inician con 'IMG' han sido filtradas.");
+            alert("¡Sincronización por IA completada! Las imágenes que inician con 'IMG' o 'Screenshot' han sido omitidas automáticamente.");
         }
 
         function toggleDarkMode() { document.documentElement.classList.toggle('dark'); }
