@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es" class="dark" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,20 +45,17 @@
             letter-spacing: 0.5px;
         }
         body.theme-halloween { background-color: #0b0512; }
-        body.theme-halloween header { border-bottom-color: #f97316; }
         body.theme-findeano { background-color: #050b14; }
-        body.theme-findeano header { border-bottom-color: #eab308; }
         body.theme-sanvalentin { background-color: #12050a; }
-        body.theme-sanvalentin header { border-bottom-color: #ec4899; }
     </style>
 </head>
-<body id="main-body" class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-500">
+<body id="main-body" class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
 
-    <!-- BANNER DE FESTIVIDAD / AMBIENTACIÓN IA -->
+    <!-- BANNER ESTACIONAL IA -->
     <div id="seasonal-banner" class="hidden bg-gradient-to-r from-purple-900 via-pink-600 to-amber-500 text-white text-xs font-bold text-center py-1.5 px-4 shadow-md"></div>
 
-    <!-- ========== HEADER Y NAVEGACIÓN ESTILO SHEIN/AMAZON ========== -->
-    <header class="bg-slate-900/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40 transition-colors">
+    <!-- ========== HEADER Y NAVEGACIÓN ========== -->
+    <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40 transition-colors">
         <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
             
             <div class="flex items-center justify-between w-full md:w-auto">
@@ -76,7 +73,7 @@
 
             <!-- Buscador Global -->
             <div class="w-full md:flex-1 max-w-xl relative">
-                <input type="text" id="search-input" oninput="ejecutarFiltroAvanzado()" placeholder="Buscar por nombre, estilo, color, oferta o categoría..." class="w-full bg-slate-800 border border-slate-700 rounded-full py-2 pl-4 pr-10 text-sm text-white focus:outline-none focus:border-cyan-400 transition">
+                <input type="text" id="search-input" oninput="ejecutarFiltroAvanzado()" placeholder="Buscar perfume, reloj, ropa, cosméticos..." class="w-full bg-slate-800 border border-slate-700 rounded-full py-2 pl-4 pr-10 text-sm text-white focus:outline-none focus:border-cyan-400 transition">
                 <span class="absolute right-3 top-2.5 text-slate-400">🔍</span>
             </div>
 
@@ -98,19 +95,16 @@
         <nav class="bg-slate-950 border-t border-slate-800 px-4 py-2 text-xs overflow-x-auto whitespace-nowrap">
             <div class="max-w-7xl mx-auto flex gap-4 text-slate-300 font-medium">
                 <button onclick="filtrarCategoria('todos')" class="hover:text-cyan-400 transition">🔥 Todo el Catálogo</button>
-                <button onclick="filtrarCategoria('interior')" class="hover:text-cyan-400 transition">🩲 Ropa Interior & Medias ($0.50+)</button>
-                <button onclick="filtrarCategoria('cosmeticos')" class="hover:text-cyan-400 transition">💄 Cosméticos & Maquillaje</button>
-                <button onclick="filtrarCategoria('cremas')" class="hover:text-cyan-400 transition">🧴 Cremas para la Piel</button>
                 <button onclick="filtrarCategoria('perfumes')" class="hover:text-cyan-400 transition">✨ Perfumes Exclusivos</button>
-                <button onclick="filtrarCategoria('joyas')" class="hover:text-cyan-400 transition">💎 Cadenas, Pendientes & Gafas</button>
-                <button onclick="filtrarCategoria('zapatos')" class="hover:text-cyan-400 transition">👟 Zapatos & Calzado</button>
                 <button onclick="filtrarCategoria('relojes')" class="hover:text-cyan-400 transition">⌚ Relojes</button>
-                <button onclick="filtrarCategoria('elegante')" class="hover:text-cyan-400 transition">👔 Ropa Elegante</button>
+                <button onclick="filtrarCategoria('joyas')" class="hover:text-cyan-400 transition">💎 Cadenas & Pendientes</button>
+                <button onclick="filtrarCategoria('cosmeticos')" class="hover:text-cyan-400 transition">💄 Cosméticos</button>
+                <button onclick="filtrarCategoria('cremas')" class="hover:text-cyan-400 transition">🧴 Cremas</button>
+                <button onclick="filtrarCategoria('interior')" class="hover:text-cyan-400 transition">🩲 Ropa Interior & Medias ($0.50+)</button>
+                <button onclick="filtrarCategoria('ropa')" class="hover:text-cyan-400 transition">👗 Ropa & Jeans</button>
                 <button onclick="filtrarCategoria('deportiva')" class="hover:text-cyan-400 transition">⚽ Ropa Deportiva</button>
-                <button onclick="filtrarCategoria('verano')" class="hover:text-cyan-400 transition">☀️ Ropa de Verano</button>
-                <button onclick="filtrarCategoria('invierno')" class="hover:text-cyan-400 transition">❄️ Ropa de Invierno</button>
-                <button onclick="filtrarCategoria('festivo')" class="hover:text-cyan-400 transition">🎃 Halloween & Eventos Festivos</button>
-                <button onclick="filtrarCategoria('vip')" class="hover:text-pink-400 font-bold transition">💎 Gama Alta / VIP (> $50)</button>
+                <button onclick="filtrarCategoria('elegante')" class="hover:text-cyan-400 transition">👔 Ropa Elegante & Vestidos</button>
+                <button onclick="filtrarCategoria('abrigos')" class="hover:text-cyan-400 transition">❄️ Abrigos & Invierno</button>
             </div>
         </nav>
     </header>
@@ -241,7 +235,7 @@
         </div>
     </aside>
 
-    <!-- ========== MODAL DETALLE DE PRODUCTO CON VARIANTES IA MULTICOLOR ========== -->
+    <!-- ========== MODAL DETALLE CON VARIANTES IA MULTICOLOR ========== -->
     <div id="detail-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-slate-800 border border-slate-700 rounded-3xl p-6 w-full max-w-2xl shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="cerrarDetalle()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-xl z-10">✕</button>
@@ -366,155 +360,181 @@
         </div>
     </div>
 
-    <!-- ========== LÓGICA JAVASCRIPT MASTER ========== -->
+    <!-- ========== LÓGICA JAVASCRIPT MASTER VINCULADA A TUS FOTOS REALES ========== -->
     <script>
-        // CATÁLOGO COMPLETO VINCULADO A LA CARPETA Img/ CON PERFUMES, RELOJES, COSMÉTICOS, ETC.
+        // CATÁLOGO COMPLETO VINCULADO EXACTAMENTE A LOS NOMBRES DE TU CARPETA "Img/"
         const productosBase = [
-            // Ropa y Jeans
+            // Perfumes (Capturas perfume 8, 9, 10, 11, 12, 13, 14, 15, 16, arabe, clásico, etc.)
             {
-                id: 1, categoria: 'ropa', nombre: 'Jeans de Ancho Claro Estilo Urbano', precio: 16.50, genero: 'Mujer', talla: 'M', color: 'Azul Claro',
-                imgMain: 'Img/Jeans ancho claro.jpg', 
-                coloresVariantes: ['Azul Claro', 'Azul Oscuro', 'Gris Vintage'],
-                tallasDisponibles: ['S', 'M', 'L'],
-                resenas: ['Corte perfecto y mezclilla muy cómoda.', 'Llegó en excelente estado.']
-            },
-            {
-                id: 2, categoria: 'ropa', nombre: 'Jeans de Corte Moderno Entallado', precio: 18.00, genero: 'Mujer', talla: 'L', color: 'Denim',
-                imgMain: 'Img/Jeans corte moderno.jpg', 
-                coloresVariantes: ['Denim', 'Negro Noche', 'Blanco Verano'],
-                tallasDisponibles: ['M', 'L', 'XL'],
-                resenas: ['Muy entallado y de excelente calidad.', 'Me encantó la tela.']
-            },
-            {
-                id: 3, categoria: 'deportiva', nombre: 'Playera Chica Gym Deportiva Compresión', precio: 8.50, genero: 'Mujer', talla: 'S', color: 'Verde / Negro',
-                imgMain: 'Img/Playera chica gym.jpg', 
-                coloresVariantes: ['Verde Fit', 'Rosa Neón', 'Negro Tech'],
-                tallasDisponibles: ['S', 'M'],
-                resenas: ['Ideal para entrenar duro, super transpirable.', 'Secado rápido excelente.']
-            },
-            // Ropa Interior y Medias (0.50 USDT a 1.00 USDT)
-            {
-                id: 4, categoria: 'interior', nombre: 'Ropa Interior de Mujer Confortable y Medias', precio: 0.50, genero: 'Mujer', talla: 'S', color: 'Multicolor',
-                imgMain: 'Img/Ropa interior mujer.jpg', 
-                coloresVariantes: ['Nude', 'Blanco', 'Rosa', 'Negro'],
-                tallasDisponibles: ['S', 'M', 'L'],
-                resenas: ['Precio insuperable de medio dólar.', 'Costuras suaves y cómodas.']
-            },
-            {
-                id: 5, categoria: 'interior', nombre: 'Conjunto de Ropa Interior Fina', precio: 1.00, genero: 'Mujer', talla: 'S', color: 'Negro Encaje',
-                imgMain: 'Img/conjunto de ropa interior.jpg', 
-                coloresVariantes: ['Negro Encaje', 'Rojo Pasión', 'Azul Zafiro'],
-                tallasDisponibles: ['S', 'M'],
-                resenas: ['Diseño delicado y muy elegante.', 'Horma perfecta.']
-            },
-            {
-                id: 6, categoria: 'deportiva', nombre: 'Shorts de Hombre Deportivos Casuales', precio: 7.20, genero: 'Hombre', talla: 'M', color: 'Gris Oscuro',
-                imgMain: 'Img/Shorts hombre.jpg', 
-                coloresVariantes: ['Gris Oscuro', 'Azul Marino', 'Negro'],
-                tallasDisponibles: ['M', 'L', 'XL'],
-                resenas: ['Súper frescos y cómodos con bolsillos.', 'Resistentes para correr.']
-            },
-            // Zapatos y Calzado
-            {
-                id: 7, categoria: 'zapatos', nombre: 'Zapatillas Deportivas GJ Urban', precio: 24.90, genero: 'Unisex', talla: '41', color: 'Blanco / Negro',
-                imgMain: 'Img/Zapatillas GJ.jpg', 
-                coloresVariantes: ['Blanco/Negro', 'Gris Metálico', 'Rojo Deportivo'],
-                tallasDisponibles: ['39', '40', '41', '42'],
-                resenas: ['Amortiguación increíble para uso diario.', 'Suela antiderrapante sólida.']
-            },
-            {
-                id: 8, categoria: 'zapatos', nombre: 'Zapatillas Casuales Clásicas', precio: 22.00, genero: 'Unisex', talla: '40', color: 'Blanco Puro',
-                imgMain: 'Img/Zapatillas.jpg', 
-                coloresVariantes: ['Blanco Puro', 'Negro Clásico', 'Beige'],
-                tallasDisponibles: ['38', '39', '40', '41'],
-                resenas: ['Lucen ejecutivas y juveniles a la vez.', 'Fáciles de limpiar.']
-            },
-            {
-                id: 9, categoria: 'zapatos', nombre: 'Zapatos de Vestir Ejecutivos de Cuero', precio: 29.50, genero: 'Hombre', talla: '42', color: 'Negro Brillante',
-                imgMain: 'Img/Zapato de vestir.jpg', 
-                coloresVariantes: ['Negro Brillante', 'Marrón Caoba'],
-                tallasDisponibles: ['40', '41', '42', '43'],
-                resenas: ['Elegantes y muy cómodos para reuniones.', 'Cuero suave.']
-            },
-            // Abrigos y Ropa de Invierno
-            {
-                id: 10, categoria: 'elegante', nombre: 'Abrigo Elegante Chica Edición Gala', precio: 32.00, genero: 'Mujer', talla: 'M', color: 'Camel / Beige',
-                imgMain: 'Img/abrigo elegante chica.jpg', 
-                coloresVariantes: ['Camel', 'Negro Noche', 'Gris Perla'],
-                tallasDisponibles: ['S', 'M', 'L'],
-                resenas: ['Viste muchísimo y protege del viento.', 'Acabados de diseñador.']
-            },
-            {
-                id: 11, categoria: 'invierno', nombre: 'Abrigos Térmicos Unisex de Invierno', precio: 28.00, genero: 'Unisex', talla: 'L', color: 'Gris Térmico',
-                imgMain: 'Img/abrigos.jpg', 
-                coloresVariantes: ['Gris Térmico', 'Verde Olivo', 'Azul Noche'],
-                tallasDisponibles: ['M', 'L', 'XL'],
-                resenas: ['Cálidos e impermeables.', 'Relación calidad-precio fantástica.']
-            },
-            // Festivos y Monos
-            {
-                id: 12, categoria: 'festivo', nombre: 'Disfraz Festivo Temático Especial', precio: 19.90, genero: 'Unisex', talla: 'M', color: 'Surtido Festivo',
-                imgMain: 'Img/disfraz.jpg', 
-                coloresVariantes: ['Edición Halloween', 'Fiesta Fin de Año', 'Cosplay'],
-                tallasDisponibles: ['S', 'M', 'L'],
-                resenas: ['Super divertido para eventos y fiestas.', 'Tela cómoda.']
-            },
-            {
-                id: 13, categoria: 'ropa', nombre: 'Mono Moderno Urbano Casual', precio: 17.50, genero: 'Unisex', talla: 'M', color: 'Gris Tech',
-                imgMain: 'Img/mono moderno.jpg', 
-                coloresVariantes: ['Gris Tech', 'Negro Carbón', 'Verde Militar'],
-                tallasDisponibles: ['S', 'M', 'L'],
-                resenas: ['Comodidad total para el fin de semana.', 'Resistente.']
-            },
-            {
-                id: 14, categoria: 'ropa', nombre: 'Monos Deportivos para Chica', precio: 16.00, genero: 'Mujer', talla: 'S', color: 'Rosa Pastel',
-                imgMain: 'Img/monos de chica.jpg', 
-                coloresVariantes: ['Rosa Pastel', 'Lila', 'Negro'],
-                tallasDisponibles: ['XS', 'S', 'M'],
-                resenas: ['Ajuste hermosísimo al cuerpo.', 'Muy suave al tacto.']
-            },
-            {
-                id: 15, categoria: 'ropa', nombre: 'Monos de Hombre Estilo Runner', precio: 18.50, genero: 'Hombre', talla: 'XL', color: 'Negro',
-                imgMain: 'Img/monos de hombre.jpg', 
-                coloresVariantes: ['Negro', 'Azul Marino', 'Gris Plomo'],
-                tallasDisponibles: ['M', 'L', 'XL'],
-                resenas: ['Bolsillos con cierre de seguridad muy útiles.', 'No pierde color al lavar.']
-            },
-            // PRODUCTOS VINCULADOS A PERFUMES, RELOJES Y COSMÉTICOS (USANDO IMÁGENES BASE DISPONIBLES CON VARIANTES IA)
-            {
-                id: 16, categoria: 'perfumes', nombre: 'Perfume Árabe Exclusivo Colección Oro', precio: 25.00, genero: 'Unisex', talla: 'Única', color: 'Dorado Ámbar',
-                imgMain: 'Img/Zapatillas GJ.jpg', 
+                id: 1, categoria: 'perfumes', nombre: 'Perfume Árabe Exclusivo Colección Oro', precio: 25.00, genero: 'Unisex', talla: 'Única', color: 'Dorado Ámbar',
+                imgMain: 'Img/perfume arabe.jpg', 
                 coloresVariantes: ['Edición Oro Ámbar', 'Edición Nuit Noire', 'Edición Rose Blanche'],
                 tallasDisponibles: ['100ml'],
                 resenas: ['Aroma profundo e imponente que dura más de 12 horas.', 'Excelente presentación y estela inigualable.']
             },
             {
-                id: 17, categoria: 'relojes', nombre: 'Reloj Cronógrafo Deportivo de Pulsera', precio: 19.99, genero: 'Hombre', talla: 'Única', color: 'Negro Mate',
-                imgMain: 'Img/Zapatillas.jpg', 
+                id: 2, categoria: 'perfumes', nombre: 'Perfume Clásico de Lujo', precio: 22.00, genero: 'Mujer', talla: 'Única', color: 'Rosa Floral',
+                imgMain: 'Img/perfume clásico.jpg', 
+                coloresVariantes: ['Rosa Floral', 'Esencia Cítrica', 'Notas Vainilla'],
+                tallasDisponibles: ['100ml'],
+                resenas: ['Delicioso olor floral que perdura todo el día.', 'Frasco bellísimo.']
+            },
+            {
+                id: 3, categoria: 'perfumes', nombre: 'Perfume Edición Especial 8', precio: 19.50, genero: 'Mujer', talla: 'Única', color: 'Rosa Pastel',
+                imgMain: 'Img/perfume8.jpg', 
+                coloresVariantes: ['Rosa Pastel', 'Fucsia Glamour'],
+                tallasDisponibles: ['90ml'],
+                resenas: ['Muy fresco y juvenil.', 'Excelente relación calidad-precio.']
+            },
+            {
+                id: 4, categoria: 'perfumes', nombre: 'Perfume Colección Nocturna 9', precio: 24.00, genero: 'Hombre', talla: 'Única', color: 'Negro Misterio',
+                imgMain: 'Img/perfume 9.jpg', 
+                coloresVariantes: ['Negro Misterio', 'Azul Profundo'],
+                tallasDisponibles: ['100ml'],
+                resenas: ['Ideal para citas y salidas nocturnas.', 'Muy varonil.']
+            },
+            {
+                id: 5, categoria: 'perfumes', nombre: 'Set de Perfumes Colección 10', precio: 29.90, genero: 'Unisex', talla: 'Única', color: 'Multicolor',
+                imgMain: 'Img/perfume 10.jpg', 
+                coloresVariantes: ['Set Multicolor', 'Set Edición Dorada'],
+                tallasDisponibles: ['5x30ml'],
+                resenas: ['Variedad fantástica para regalar o probar.', 'Aromas riquísimos.']
+            },
+
+            // Relojes (relojes4.jpg, reloj inteligente.jpg, reloj elegante.jpg, etc.)
+            {
+                id: 6, categoria: 'relojes', nombre: 'Reloj Inteligente Smartwatch Sport', precio: 34.50, genero: 'Unisex', talla: 'Única', color: 'Negro / Acero',
+                imgMain: 'Img/reloj inteligente.jpg', 
                 coloresVariantes: ['Negro Mate', 'Plata Acero', 'Oro Rosa'],
                 tallasDisponibles: ['Ajustable'],
-                resenas: ['Apariencia elegante de alta gama.', 'Buen peso y materiales sólidos.']
+                resenas: ['Funciones impecables y batería duradera.', 'Excelente sincronización móvil.']
             },
             {
-                id: 18, categoria: 'cosmeticos', nombre: 'Kit de Maquillaje y Delineadores Profesionales', precio: 12.50, genero: 'Mujer', talla: 'Única', color: 'Tonos Nude',
-                imgMain: 'Img/Playera chica gym.jpg', 
-                coloresVariantes: ['Tonos Nude', 'Tonos Glamour', 'Tonos Naturales'],
+                id: 7, categoria: 'relojes', nombre: 'Reloj Elegante de Pulsera Ejecutivo', precio: 28.00, genero: 'Hombre', talla: 'Única', color: 'Dorado / Negro',
+                imgMain: 'Img/reloj elegante.jpg', 
+                coloresVariantes: ['Dorado', 'Plata', 'Negro Ejecutivo'],
+                tallasDisponibles: ['Ajustable'],
+                resenas: ['Apariencia de alta gama a un precio accesible.', 'Muy elegante.']
+            },
+            {
+                id: 8, categoria: 'relojes', nombre: 'Reloj Estilo Clásico de Cuero', precio: 21.00, genero: 'Mujer', talla: 'Única', color: 'Marrón Clásico',
+                imgMain: 'Img/reloj estilo clásico.jpg', 
+                coloresVariantes: ['Marrón Cuero', 'Negro Minimalista', 'Beige Vintage'],
+                tallasDisponibles: ['Estándar'],
+                resenas: ['Delicado y combina con cualquier prenda.', 'Correa muy suave.']
+            },
+            {
+                id: 9, categoria: 'relojes', nombre: 'Colección de Relojes Varios 4', precio: 32.00, genero: 'Hombre', talla: 'Única', color: 'Surtido',
+                imgMain: 'Img/relojes4.jpg', 
+                coloresVariantes: ['Set Ejecutivo', 'Set Casual Sport'],
+                tallasDisponibles: ['Estándar'],
+                resenas: ['Muy completos y de excelente maquinaria.', 'Llegó intacto.']
+            },
+
+            // Cadenas y Joyería (cadena.jpg, cadena fina.jpg, Anillos.jpg)
+            {
+                id: 10, categoria: 'joyas', nombre: 'Cadena con Dije Elegante', precio: 12.50, genero: 'Mujer', talla: 'Única', color: 'Plata Brillante',
+                imgMain: 'Img/cadena.jpg', 
+                coloresVariantes: ['Plata', 'Oro Brillante', 'Oro Rosa'],
+                tallasDisponibles: ['45cm'],
+                resenas: ['Brilla hermoso con la luz y no mancha la piel.', 'Me encantó.']
+            },
+            {
+                id: 11, categoria: 'joyas', nombre: 'Cadena Fina Minimalista', precio: 9.90, genero: 'Mujer', talla: 'Única', color: 'Oro Fino',
+                imgMain: 'Img/cadena fina .jpg', 
+                coloresVariantes: ['Oro Fino', 'Plata Fina'],
+                tallasDisponibles: ['40cm'],
+                resenas: ['Súper delicada y elegante.', 'Ideal para uso diario.']
+            },
+            {
+                id: 12, categoria: 'joyas', nombre: 'Set de Anillos Estilo Vintage', precio: 8.50, genero: 'Mujer', talla: 'S/M', color: 'Plata Envejecida',
+                imgMain: 'Img/Anillos.jpg', 
+                coloresVariantes: ['Plata Vintage', 'Dorado Boho'],
+                tallasDisponibles: ['Ajustables'],
+                resenas: ['Diseños muy originales en tendencia.', 'Gran calidad.']
+            },
+
+            // Cosméticos y Cremas (cosméticos bases.jpg, cosméticos delineador.jpg, set de cosméticos.jpg)
+            {
+                id: 13, categoria: 'cosmeticos', nombre: 'Set de Cosméticos Profesional Completo', precio: 16.00, genero: 'Mujer', talla: 'Única', color: 'Tonos Variados',
+                imgMain: 'Img/set de cosméticos.jpg', 
+                coloresVariantes: ['Tonos Naturales', 'Tonos Glamour'],
                 tallasDisponibles: ['Set Completo'],
-                resenas: ['Excelente pigmentación para el día a día.', 'Fácil de difuminar.']
+                resenas: ['Pigmentación excelente y larga duración.', 'Muy completo.']
             },
             {
-                id: 19, categoria: 'cremas', nombre: 'Crema Hidratante Facial Nutritiva para Piel', precio: 9.50, genero: 'Unisex', talla: 'Única', color: 'Blanco Suave',
-                imgMain: 'Img/abrigos.jpg', 
-                coloresVariantes: ['Fórmula Hidratante', 'Fórmula Antiedad', 'Fórmula Revitalizante'],
-                tallasDisponibles: ['100g'],
-                resenas: ['Deja la piel tersa y sin sensación grasosa.', 'Aroma muy fresco.']
+                id: 14, categoria: 'cosmeticos', nombre: 'Bases de Maquillaje Alta Cobertura', precio: 11.50, genero: 'Mujer', talla: 'Única', color: 'Tonos Nude',
+                imgMain: 'Img/cosméticos bases.jpg', 
+                coloresVariantes: ['Beige Claro', 'Beige Medio', 'Canela'],
+                tallasDisponibles: ['30ml'],
+                resenas: ['Deja la piel con acabado de porcelana.', 'No se cuartea.']
             },
             {
-                id: 20, categoria: 'joyas', nombre: 'Gafas de Sol Estilo Vintage y Cadenas', jsonCat: 'joyas', nombre: 'Gafas de Sol Estilo Vintage y Cadenas', precio: 11.20, genero: 'Mujer', talla: 'Única', color: 'Dorado / Negro',
+                id: 15, categoria: 'cosmeticos', nombre: 'Delineador de Ojos de Alta Presisión', precio: 6.90, genero: 'Mujer', talla: 'Única', color: 'Negro Intenso',
+                imgMain: 'Img/cosméticos delineador.jpg', 
+                coloresVariantes: ['Negro Intenso', 'Café Oscuro'],
+                tallasDisponibles: ['Estándar'],
+                resenas: ['No se corre con el sudor o agua.', 'Punta perfecta.']
+            },
+
+            // Ropa Interior y Medias (0.50 USDT)
+            {
+                id: 16, categoria: 'interior', nombre: 'Ropa Interior Femenina Sencilla y Medias', precio: 0.50, genero: 'Mujer', talla: 'S', color: 'Multicolor',
+                imgMain: 'Img/Ropa interior mujer.jpg', 
+                coloresVariantes: ['Blanco', 'Nude', 'Negro', 'Rosa'],
+                tallasDisponibles: ['S', 'M', 'L'],
+                resenas: ['Precio increíble de medio dólar.', 'Algodón muy suave.']
+            },
+            {
+                id: 17, categoria: 'interior', nombre: 'Conjunto Interior Femenino Elegante', precio: 1.20, genero: 'Mujer', talla: 'S', color: 'Negro Encaje',
+                imgMain: 'Img/conjunto interior femenino.jpg', 
+                coloresVariantes: ['Negro Encaje', 'Rojo Pasión', 'Rosa Pastel'],
+                tallasDisponibles: ['S', 'M'],
+                resenas: ['Encaje de excelente calidad y comodidad.', 'Muy lindo diseño.']
+            },
+
+            // Ropa, Jeans y Playeras (4.00 a 25.00 USDT)
+            {
+                id: 18, categoria: 'ropa', nombre: 'Jeans de Ancho Claro Estilo Urbano', precio: 16.50, genero: 'Mujer', talla: 'M', color: 'Azul Claro',
                 imgMain: 'Img/Jeans ancho claro.jpg', 
-                coloresVariantes: ['Dorado/Negro', 'Carey Clásico', 'Plata Espejo'],
-                tallasDisponibles: ['Estándar UV400'],
-                resenas: ['Protegen muy bien del sol y lucen modernas.', 'Estuche incluido.']
+                coloresVariantes: ['Azul Claro', 'Azul Oscuro'],
+                tallasDisponibles: ['S', 'M', 'L'],
+                resenas: ['Corte perfecto y mezclilla cómoda.', 'Talla exacta.']
+            },
+            {
+                id: 19, categoria: 'ropa', nombre: 'Jeans de Corte Moderno Entallado', precio: 18.00, genero: 'Mujer', talla: 'L', color: 'Denim',
+                imgMain: 'Img/Jeans corte moderno.jpg', 
+                coloresVariantes: ['Denim', 'Negro Noche'],
+                tallasDisponibles: ['M', 'L', 'XL'],
+                resenas: ['Muy entallado y de alta calidad.', 'Me encantó.']
+            },
+            {
+                id: 20, categoria: 'ropa', nombre: 'Playera Casual con Estilo Retro', precio: 6.50, genero: 'Unisex', talla: 'M', color: 'Negro',
+                imgMain: 'Img/playera.jpg', 
+                coloresVariantes: ['Negro', 'Blanco', 'Gris'],
+                tallasDisponibles: ['S', 'M', 'L', 'XL'],
+                resenas: ['Tela suave al tacto y no encoge.', 'Estampa genial.']
+            },
+            {
+                id: 21, categoria: 'deportiva', nombre: 'Playera Chica Gym Deportiva', precio: 8.50, genero: 'Mujer', talla: 'S', color: 'Rosa / Negro',
+                imgMain: 'Img/Playera chica gym.jpg', 
+                coloresVariantes: ['Rosa Fit', 'Negro Tech', 'Gris Sport'],
+                tallasDisponibles: ['S', 'M'],
+                resenas: ['Ideal para entrenar, muy transpirable.', 'Secado rápido.']
+            },
+            {
+                id: 22, categoria: 'abrigos', nombre: 'Abrigos Térmicos Unisex de Invierno', precio: 28.00, genero: 'Unisex', talla: 'L', color: 'Gris Térmico',
+                imgMain: 'Img/abrigos.jpg', 
+                coloresVariantes: ['Gris', 'Negro', 'Verde Olivo'],
+                tallasDisponibles: ['M', 'L', 'XL'],
+                resenas: ['Cálidos e impermeables contra el frío.', 'Excelente abrigo.']
+            },
+            {
+                id: 23, categoria: 'elegante', nombre: 'Vestido Elegante de Gala', precio: 24.00, genero: 'Mujer', talla: 'M', color: 'Rojo Pasión',
+                imgMain: 'Img/vestido.jpg', 
+                coloresVariantes: ['Rojo Pasión', 'Negro Noche', 'Verde Esmeralda'],
+                tallasDisponibles: ['S', 'M', 'L'],
+                resenas: ['Elegancia absoluta y caída hermosa de la tela.', 'Perfecto para fiestas.']
             }
         ];
 
@@ -527,54 +547,19 @@
 
         const palabrasProhibidas = ['estafa', 'robo', 'engaño', 'mentira', 'fraude', 'estafadores', 'ladrones', 'basura'];
 
-        // DICCIONARIO BILINGÜE (ES / EN)
         const i18n = {
             ES: {
                 title: "TIENDA VIRTUAL AETHERIA MARKET",
-                searchPlaceholder: "Buscar por nombre, estilo, color, oferta o categoría...",
-                allCat: "🔥 Todo el Catálogo",
-                interior: "🩲 Ropa Interior & Medias ($0.50+)",
-                cosmetics: "💄 Cosméticos & Maquillaje",
-                creams: "🧴 Cremas para la Piel",
-                perfumes: "✨ Perfumes Exclusivos",
-                jewelry: "💎 Cadenas, Pendientes & Gafas",
-                shoes: "👟 Zapatos & Calzado",
-                watches: "⌚ Relojes",
-                elegant: "👔 Ropa Elegante",
-                sport: "⚽ Ropa Deportiva",
-                summer: "☀️ Ropa de Verano",
-                winter: "❄️ Ropa de Invierno",
-                festive: "🎃 Halloween & Eventos Festivos",
-                vip: "💎 Gama Alta / VIP (> $50)",
+                searchPlaceholder: "Buscar perfume, reloj, ropa, cosméticos...",
                 catalogTitle: "Catálogo Verificado por Imágenes",
                 showResults: "Mostrando productos verificados.",
-                addToCart: "Añadir al Carrito",
-                viewOptions: "Ver Opciones 🔍",
-                reviews: "⭐ Reseñas Verificadas:",
                 rights: "© 2026 Tienda Virtual Aetheria Market. Todos los derechos reservados."
             },
             EN: {
                 title: "AETHERIA MARKET VIRTUAL STORE",
-                searchPlaceholder: "Search by name, style, color, offer or category...",
-                allCat: "🔥 Full Catalog",
-                interior: "🩲 Underwear & Socks ($0.50+)",
-                cosmetics: "💄 Cosmetics & Makeup",
-                creams: "🧴 Skin Creams",
-                perfumes: "✨ Exclusive Perfumes",
-                jewelry: "💎 Chains, Earrings & Glasses",
-                shoes: "👟 Shoes & Footwear",
-                watches: "⌚ Watches",
-                elegant: "👔 Elegant Clothing",
-                sport: "⚽ Sportswear",
-                summer: "☀️ Summer Clothing",
-                winter: "❄️ Winter Clothing",
-                festive: "🎃 Halloween & Festive Events",
-                vip: "💎 High End / VIP (> $50)",
+                searchPlaceholder: "Search perfume, watch, clothing, cosmetics...",
                 catalogTitle: "Image Verified Catalog",
                 showResults: "Showing verified products.",
-                addToCart: "Add to Cart",
-                viewOptions: "View Options 🔍",
-                reviews: "⭐ Verified Reviews:",
                 rights: "© 2026 Aetheria Market Virtual Store. All rights reserved."
             }
         };
@@ -594,46 +579,43 @@
         }
 
         function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-            document.getElementById('main-body').classList.toggle('bg-slate-900');
-            document.getElementById('main-body').classList.toggle('bg-slate-100');
+            const root = document.getElementById('html-root');
+            const body = document.getElementById('main-body');
+            root.classList.toggle('dark');
+            body.classList.toggle('bg-slate-900');
+            body.classList.toggle('bg-slate-100');
+            body.classList.toggle('text-slate-100');
+            body.classList.toggle('text-slate-900');
         }
 
         function detectarFestividadAmbiental() {
             const fecha = new Date();
             const mes = fecha.getMonth() + 1;
             const dia = fecha.getDate();
-            const body = document.getElementById('main-body');
             const banner = document.getElementById('seasonal-banner');
-
             banner.classList.remove('hidden');
 
             if (mes === 10 && dia >= 20 || mes === 11 && dia <= 2) {
-                body.className = 'theme-halloween text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-500';
-                banner.innerHTML = '🎃 Ambientación Especial Aetheria: ¡Descuentos de Halloween Activados! Envíos rápidos en disfraces.';
+                banner.innerHTML = '🎃 Ambientación Especial Aetheria: ¡Descuentos de Halloween Activados!';
             } else if (mes === 12 || (mes === 1 && dia <= 6)) {
-                body.className = 'theme-findeano text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-500';
                 banner.innerHTML = '🎄 Ofertas de Fin de Año Aetheria: ¡Cupón del 2% y portes rebajados!';
             } else if (mes === 2 && dia >= 10 && dia <= 16) {
-                body.className = 'theme-sanvalentin text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-500';
                 banner.innerHTML = '💖 Especial 14 de Febrero: Perfumes y Joyería Exclusiva con Entregas Exprés.';
             } else {
                 banner.classList.add('hidden');
             }
         }
 
-        // RENDERIZADO DEL CATÁLOGO (FILTRA ARCHIVOS "IMG-" O "Screenshot" Y MUESTRA TODO LO DEMÁS)
         function renderizarProductos(lista) {
             const grid = document.getElementById('product-grid');
             const countLabel = document.getElementById('count-results');
             grid.innerHTML = '';
 
             const listaValida = lista.filter(p => !p.imgMain.includes('IMG-') && !p.imgMain.includes('Screenshot'));
-
-            countLabel.textContent = `Mostrando ${listaValida.length} productos verificados en carpeta Img.`;
+            countLabel.textContent = `Mostrando ${listaValida.length} productos verificados.`;
 
             if (listaValida.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400">No hay productos en esta categoría.</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400">No hay productos en esta selección.</div>`;
                 return;
             }
 
@@ -670,7 +652,6 @@
             });
         }
 
-        // MODAL DETALLE CON MULTIPLES VARIANTES DE COLOR Y PRESENTACION CREADAS POR IA (PUNTO 14)
         function verDetalleProducto(id) {
             const p = productosBase.find(prod => prod.id === id);
             if (!p) return;
@@ -683,7 +664,6 @@
             document.getElementById('detail-title').textContent = p.nombre;
             document.getElementById('detail-price').textContent = `${p.precio.toFixed(2)} USDT`;
 
-            // Tallas
             let tallasHTML = '';
             p.tallasDisponibles.forEach((t, idx) => {
                 let active = idx === 0 ? 'border-cyan-400 bg-cyan-950' : '';
@@ -691,7 +671,6 @@
             });
             document.getElementById('detail-tallas-container').innerHTML = tallasHTML;
 
-            // Colores / Variantes IA
             let coloresHTML = '';
             p.coloresVariantes.forEach((c, idx) => {
                 let active = idx === 0 ? 'border-pink-400 bg-pink-950' : '';
@@ -719,7 +698,6 @@
             btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('border-pink-400', 'bg-pink-950'));
             btn.classList.add('border-pink-400', 'bg-pink-950');
             colorSeleccionadoActual = color;
-            // La IA adapta visualmente el subtítulo o simula variación de color
         }
 
         function renderizarComentariosModal() {
@@ -960,7 +938,7 @@
         }
 
         function iniciarTourGuiado() {
-            alert("🤖 Tour Guiado Aetheria:\n1. Usa el menú superior para ver categorías.\n2. Haz clic sobre cualquier producto para abrir las variantes de color/presentación creadas por IA y ver reseñas.\n3. Abre el carrito flotante arriba a la derecha para modificar cantidades, llenar los datos de envío y obtener la dirección o QR de pago USDT.");
+            alert("🤖 Tour Guiado Aetheria:\n1. Usa el menú superior para ver categorías (perfumes, relojes, ropa, etc.).\n2. Haz clic sobre cualquier producto para abrir las variantes de color/presentación creadas por IA.\n3. Abre el carrito flotante arriba a la derecha para ver tu factura con impuestos desglosados y pagar en USDT.");
         }
 
         function ejecutarFiltroAvanzado() {
@@ -994,7 +972,7 @@
         }
 
         function sincronizarIA() {
-            alert("¡Sincronización por IA completada! Las imágenes que inician con 'IMG' o 'Screenshot' han sido omitidas automáticamente.");
+            alert("¡Sincronización por IA completada! Las imágenes han sido organizadas correctamente.");
         }
 
         function toggleBot() {
