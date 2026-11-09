@@ -322,11 +322,16 @@
         min="0" 
         step="0.5"
         class="w-24 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none dark:text-white"
-      >
-      <button 
-        onclick="importarShein()" 
-        class="bg-gradient-to-r from-aetheria-pink to-aetheria-purple text-white px-5 py-2 rounded-lg font-bold text-sm hover:opacity-90 transition"
-      >
+<!-- ========== IMPORTAR DESDE SHEIN ========== -->
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <div class="max-w-xl mx-auto bg-white dark:bg-aetheria-card p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+    <h3 class="text-sm font-bold mb-3 text-aetheria-pink dark:text-aetheria-cyan">
+      Importar producto desde Shein
+    </h3>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input type="text" id="shein-url" placeholder="Pega aquí el link de Shein..." class="flex-1 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none dark:text-white">
+      <input type="number" id="margen" value="5" min="0" step="0.5" class="w-24 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none dark:text-white">
+      <button onclick="importarShein()" class="bg-gradient-to-r from-aetheria-pink to-aetheria-purple text-white px-5 py-2 rounded-lg font-bold text-sm hover:opacity-90 transition">
         Importar
       </button>
     </div>
@@ -335,39 +340,38 @@
 </div>
 
 <script>
-  async function importarShein() {
-    const url = document.getElementById('shein-url').value.trim();
-    const margen = document.getElementById('margen').value || 5;
-    const status = document.getElementById('shein-status');
+async function importarShein() {
+  const url = document.getElementById('shein-url').value.trim();
+  const margen = document.getElementById('margen').value || 5;
+  const status = document.getElementById('shein-status');
 
-    if (!url) {
-      status.textContent = "⚠️ Pega un link de Shein primero";
-      return;
-    }
-
-    status.textContent = "⏳ Procesando... (puede tardar 30-50 segundos la primera vez)";
-    
-    try {
-      const response = await fetch("https://aetheria-backend-g48y.onrender.com/api/procesar-producto", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          url_shein: url,
-          margen_ganancia: parseFloat(margen)
-        })
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        status.innerHTML = `✅ <strong>\( {data.producto.nombre}</strong><br>Precio venta: <strong> \){data.producto.precio_venta} USDT</strong>`;
-      } else {
-        status.textContent = "❌ No se pudo procesar el link";
-      }
-    } catch (error) {
-      status.textContent = "❌ Error de conexión con el servidor";
-      console.error(error);
-    }
+  if (!url) {
+    status.textContent = "Pega un link de Shein primero";
+    return;
   }
+
+  status.textContent = "Procesando... (puede tardar 30-50 segundos la primera vez)";
+
+  try {
+    const response = await fetch("https://aetheria-backend-g48y.onrender.com/api/procesar-producto", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        url_shein: url,
+        margen_ganancia: parseFloat(margen)
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      status.innerHTML = "✅ " + data.producto.nombre + "<br>Precio venta: <strong>" + data.producto.precio_venta + " USDT</strong>";
+    } else {
+      status.textContent = "No se pudo procesar el link";
+    }
+  } catch (error) {
+    status.textContent = "Error de conexión con el servidor";
+    console.error(error);
+  }
+}
 </script>
-  
