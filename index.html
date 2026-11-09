@@ -24,7 +24,7 @@ body{background:var(--bg);color:var(--tx);font-family:system-ui,sans-serif}
 </head>
 <body class="min-h-screen flex flex-col">
 
-<!-- Banner Dinámico para Fechas Importantes (Halloween, San Valentín, Madres, Padres, Fin de Año, Black Friday) -->
+<!-- Banner Dinámico para Fechas Importantes -->
 <div id="ban" class="hidden text-center text-xs font-bold text-white py-1.5"></div>
 
 <header class="sticky top-0 z-40 border-b" style="background:var(--bg);border-color:var(--line)">
@@ -41,14 +41,14 @@ body{background:var(--bg);color:var(--tx);font-family:system-ui,sans-serif}
  <nav id="nav" class="flex gap-2 overflow-x-auto px-4 pb-2 text-xs max-w-7xl mx-auto"></nav>
 </header>
 
-<!-- Filtros Desplegables estilo Amazon/SheIn -->
+<!-- Filtros Desplegables -->
 <section class="max-w-7xl mx-auto px-4 mt-4 w-full grid grid-cols-1 sm:grid-cols-3 gap-2">
  <select id="fs" class="in" onchange="render()"><option value="todos" data-t="allsex"></option><option>Mujer</option><option>Hombre</option><option>Unisex</option></select>
  <select id="fz" class="in" onchange="render()"></select>
  <select id="fo" class="in" onchange="render()"><option value="asc" data-t="asc"></option><option value="desc" data-t="desc"></option></select>
 </section>
 
-<!-- Panel Exclusivo Administrador SheIn (Clave: Rist2026) -->
+<!-- Panel Administrador Exclusivo SheIn (Clave: Rist2026) -->
 <section id="adm" class="hidden max-w-2xl mx-auto px-4 mt-4 w-full">
  <div class="c rounded-2xl p-4 border-pink-500">
   <b class="text-xs text-pink-400">🔒 Panel Administrador · SheIn Importer (Clave: Rist2026)</b>
@@ -58,7 +58,7 @@ body{background:var(--bg);color:var(--tx);font-family:system-ui,sans-serif}
  </div>
 </section>
 
-<!-- Buzón Encargo SheIn con USDT (+35%) para clientes sin dólares -->
+<!-- Buzón Encargo SheIn con USDT (+35%) -->
 <section class="max-w-3xl mx-auto px-4 mt-4 w-full">
  <div class="c rounded-2xl p-4">
   <b class="text-sm" data-t="enc"></b>
@@ -91,7 +91,7 @@ body{background:var(--bg);color:var(--tx);font-family:system-ui,sans-serif}
  </div>
 </section>
 
-<!-- Footer con Leyes Jurídicas Explicadas con Términos Rebuscados -->
+<!-- Footer con Leyes Jurídicas -->
 <footer class="max-w-5xl mx-auto px-4 pb-24 w-full">
  <details class="c rounded-2xl p-4 text-xs m">
   <summary class="font-bold cursor-pointer" style="color:var(--tx)">⚖️ Aviso legal, Leyes Jurídicas y Derechos de Autor · Legal Notice</summary>
@@ -123,7 +123,7 @@ body{background:var(--bg);color:var(--tx);font-family:system-ui,sans-serif}
  </div>
 </aside>
 
-<!-- Modal Ampliado de Producto (Cambio dinámico de tallas, colores y modelos) -->
+<!-- Modal Ampliado de Producto -->
 <div id="modal" class="fixed inset-0 z-50 hidden bg-black/70 flex items-center justify-center p-3">
  <div class="c rounded-2xl p-4 w-full max-w-2xl max-h-[92vh] overflow-y-auto relative">
   <button onclick="closeM()" class="absolute top-2 right-3 text-xl z-10">✕</button>
@@ -147,7 +147,7 @@ body{background:var(--bg);color:var(--tx);font-family:system-ui,sans-serif}
  </div>
 </div>
 
-<!-- Recibo Oficial de Pago con Desglose -->
+<!-- Recibo Oficial de Pago -->
 <div id="rm" class="fixed inset-0 z-[60] hidden bg-black/70 flex items-center justify-center p-3">
  <div class="c rounded-2xl p-4 w-full max-w-md max-h-[92vh] overflow-y-auto">
   <h3 class="font-bold mb-2">🧾 <span data-t="pay"></span></h3>
@@ -156,7 +156,7 @@ body{background:var(--bg);color:var(--tx);font-family:system-ui,sans-serif}
  </div>
 </div>
 
-<!-- Bot Asistente Interactivo, Guía y Registro de Clientes -->
+<!-- Bot Asistente Interactivo -->
 <button onclick="botOpen()" class="fixed bottom-4 left-4 z-40 btn text-lg shadow-2xl" title="Bot Asistente">🤖</button>
 <div id="bp" class="hidden fixed bottom-16 left-4 z-40 c rounded-2xl p-3 w-72 text-xs shadow-2xl border-pink-500/40">
  <div id="bm" class="mb-2 font-medium"></div>
@@ -164,7 +164,13 @@ body{background:var(--bg);color:var(--tx);font-family:system-ui,sans-serif}
 </div>
 
 <script>
-const CFG={folder:'',key:'Rist2026',code:'AETHERIA'};
+/* ===== CONFIGURACIÓN: Apuntando a tu carpeta "Img" ===== */
+const CFG={
+  folder:'Img',        /* Carpeta exacta donde están tus 47 imágenes */
+  key:'Rist2026',
+  code:'AETHERIA'
+};
+
 const FALLBACK=['Jeans ancho claro.jpg','Jeans corte moderno.jpg','Playera chica gym.jpg','Ropa interior mujer.jpg','Shorts hombre.jpg','Zapatillas GJ.jpg','Zapatillas.jpg','Zapato de vestir.jpg','abrigo elegante chica.jpg','abrigos.jpg','disfraz.jpg','mono moderno.jpg','monos de chica.jpg','monos de hombre.jpg','perfume.jpg','perfumería.jpg','playera de GYM.jpg','playera oscura.jpg','playera.jpg','reloj elegante.jpg','reloj estilo clásico.jpg','reloj inteligente.jpg','relojes 3.jpg','relojes varios.jpg','ropa de mujer.jpg','ropa interior moderna.jpg','ropa interior mujer fina.jpg','ropa interior.jpg','sudadera festiva.jpg','tenis moderno.jpg','tenis mujer.jpg','tenis.jpg','vestido.jpg','zapatilla.jpg','zapato.jpg'];
 
 const T={
@@ -278,7 +284,7 @@ const CATS=[
   ['relojes','⌚ Relojes','⌚ Watches'],
   ['joyas','💎 Cadenas y pendientes','💎 Jewelry'],
   ['gafas','🕶️ Gafas','🕶️ Glasses'],
-  ['cosmeticos','💄 Cosméticos','💄 Cosmetics'],
+  ['cosmeticos','💄 Cosméticos','💄 Cosméticos'],
   ['cremas','🧴 Cremas','🧴 Skincare'],
   ['interior','🩲 Ropa interior y medias','🩲 Underwear & socks'],
   ['ropa','👗 Ropa y jeans','👗 Clothing & jeans'],
@@ -289,7 +295,6 @@ const CATS=[
   ['eventos','🎃 Festivos','🎃 Holidays']
 ];
 
-/* Reglas de IA ultralimpias para evitar cruce de categorías */
 const RULES=[
   [/perfum|fragan|colonia/,'perfumes'],
   [/reloj/,'relojes'],
@@ -334,7 +339,7 @@ let cart=[];try{cart=JSON.parse(localStorage.cart||'[]')}catch(e){}
 const t=k=>(T[L][k]??k);
 const get=f=>P.find(p=>p.f===f);
 const imgUrl=f=>(BASE?BASE+'/':'')+encodeURIComponent(f);
-/* EXCLUSIÓN ESTRICTA: Se ignoran archivos que empiecen por IMG, screenshot o placeholder */
+/* EXCLUSIÓN ESTRICTA: Ignora archivos que empiecen por IMG, screenshot o placeholder */
 const isImg=n=>/\.(jpe?g|png|webp)$/i.test(n)&&!/^(img|screenshot|placeholder)/i.test(n);
 
 function build(f,i){
@@ -343,7 +348,7 @@ function build(f,i){
   const sex=/mujer|chica|dama|femen|vestido/.test(n)?'Mujer':/hombre|chico|caballero|masculin/.test(n)?'Hombre':'Unisex';
   let price;
   if(cat==='interior'&&!/fina|elegan|conjunto|estampad|modelo/.test(n)){
-    price=H%2?1:0.50; // Precios estrictos de 0.50 a 1 USDT para ropa interior sencilla y medias
+    price=H%2?1:0.50;
   } else {
     let [lo,hi]=PR[cat]||[4,25];
     if(/inteligente|smart/.test(n))[lo,hi]=[30,48];
@@ -360,15 +365,24 @@ async function load(){
   const c=sessionStorage.files;
   if(c){try{const o=JSON.parse(c);files=o.files;dir=o.dir}catch(e){}}
   
-  /* Carga dinámica y automática de las imágenes desde el repositorio GitHub */
+  /* Carga dinámica apuntando directamente a la carpeta "Img" de GitHub */
   if(!files&&location.hostname.endsWith('github.io')){
     const u=location.hostname.split('.')[0],r=location.pathname.split('/')[1];
-    if(r&&!/\.html?$/.test(r)){
-      for(const d of [CFG.folder,'']){
-        try{const x=await fetch(`https://api.github.com/repos/${u}/${r}/contents/${d}`);if(!x.ok)continue;
-          const j=await x.json(),fl=j.filter(i=>i.type==='file').map(i=>i.name).filter(isImg);
-          if(fl.length){files=fl;dir=d;sessionStorage.files=JSON.stringify({files,dir});break}}catch(e){}
-      }
+    const repoPath = r && !/\.html?$/.test(r) ? r : '';
+    
+    for(const d of [CFG.folder, 'Img', 'img', ''])){
+      try{
+        const apiUrl = repoPath 
+          ? `https://api.github.com/repos/${u}/${repoPath}/contents/${d}` 
+          : `https://api.github.com/repos/${u}/contents/${d}`;
+        const x = await fetch(apiUrl);
+        if(!x.ok) continue;
+        const j = await x.json();
+        if(Array.isArray(j)){
+          const fl = j.filter(i => i.type === 'file').map(i => i.name).filter(isImg);
+          if(fl.length){ files = fl; dir = d; sessionStorage.files = JSON.stringify({files, dir}); break; }
+        }
+      }catch(e){}
     }
   }
   if(!files){files=FALLBACK;dir=CFG.folder}
@@ -448,11 +462,11 @@ function cartT(open){const d=$('#cart'),o=open===true?true:!d.classList.contains
 function applyC(){coupon=$('#cp').value.trim().toUpperCase()===CFG.code;drawCart();if(!coupon)alert('✗')}
 function calc(){
   const sub=cart.reduce((s,i)=>s+get(i.f).price*i.q,0),n=cart.reduce((s,i)=>s+i.q,0);
-  const imp=sub*.05; // IMPSV 5%
-  const ent=sub*(ship==='expres'?.08:.03); // Entrega normal 3%, exprés 8%
-  const cup=coupon?sub*.02:0; // Rebaja 2% cupón
+  const imp=sub*.05;
+  const ent=sub*(ship==='expres'?.08:.03);
+  const cup=coupon?sub*.02:0;
   let tot=sub+imp+ent-cup;
-  const vol=(tot>100&&n>3)?tot*.034:0; // Descuento volumen 3.4%
+  const vol=(tot>100&&n>3)?tot*.034:0;
   tot-=vol;
   return{sub,n,imp,ent,cup,vol,tot};
 }
@@ -500,18 +514,18 @@ function admin(){if(prompt('Clave de Administrador / Key:')===CFG.key){$('#adm')
 
 function sheinAdmin(){
   const u=$('#su').value.trim();
-  $('#ss').textContent=/shein/i.test(u)?'✔ URL procesada exitosamente. Sube la foto correspondiente a la carpeta del repositorio con el nombre del producto.':'✗ URL no válida de SheIn';
+  $('#ss').textContent=/shein/i.test(u)?'✔ URL procesada. Sube la foto a la carpeta Img con el nombre del producto.':'✗ URL no válida';
 }
 
 function season(){
   const d=new Date(),v=(d.getMonth()+1)*100+d.getDate();
   const E=[
-    [1015,1101,'🎃 Ambientación de Halloween: disfraces y ofertas festivas','🎃 Halloween theme: costumes & holiday deals','#ea580c','#581c87'],
-    [1220,105,'🎆 Ambientación de Fin de Año: súper ofertas y rebajas','🎆 New Year theme: super sales & deals','#ca8a04','#be185d'],
-    [207,214,'💘 San Valentín: regalos especiales y romanticismo','💘 Valentine’s theme: special gifts','#be123c','#ec4899'],
-    [501,512,'💐 Día de las Madres: ofertas especiales','💐 Mother’s Day theme','#db2777','#f472b6'],
-    [615,621,'👔 Día de los Padres: regalos y descuentos','👔 Father’s Day theme','#0369a1','#1e3a8a'],
-    [1120,1130,'🏷️ Black Friday: descuentos y rebajas masivas','🏷️ Black Friday theme: mega sales','#dc2626','#111827']
+    [1015,1101,'🎃 Halloween: disfraces y ofertas festivas','🎃 Halloween theme','#ea580c','#581c87'],
+    [1220,105,'🎆 Fin de Año: súper ofertas y rebajas','🎆 New Year theme','#ca8a04','#be185d'],
+    [207,214,'💘 San Valentín: regalos especiales','💘 Valentine’s theme','#be123c','#ec4899'],
+    [501,512,'💐 Día de las Madres: ofertas','💐 Mother’s Day theme','#db2777','#f472b6'],
+    [615,621,'👔 Día de los Padres: regalos','👔 Father’s Day theme','#0369a1','#1e3a8a'],
+    [1120,1130,'🏷️ Black Friday: descuentos masivos','🏷️ Black Friday theme','#dc2626','#111827']
   ];
   const e=E.find(x=>x[0]<=x[1]?v>=x[0]&&v<=x[1]:v>=x[0]||v<=x[1]),b=$('#ban');
   if(!e){b.classList.add('hidden');document.body.style.backgroundImage='';return}
@@ -520,22 +534,22 @@ function season(){
   document.body.style.backgroundImage=`linear-gradient(180deg,${e[4]}33,transparent 320px)`;
 }
 
-/* ===== Bot Asistente Interactivo, Inscripción y Tour Guiado ===== */
+/* ===== Bot Asistente Interactivo y Tour Guiado ===== */
 const FAQ={
 es:[
-  ['📝 Inscribirse / Nuevo Cliente','Para registrarte basta con realizar tu primera compra completando tu Nombre, Edad y Dirección en el carrito.'],
-  ['⚡ Compra rápida y Envío exprés','Normal (15-30 días) tiene 3% de recargo de entrega. La Compra Rápida o Exprés (5-8 días) suma el 8% al producto.'],
-  ['🏷️ Cupones y Descuentos','Aplica el cupón AETHERIA para un −2%. Si gastas más de 100 USDT y llevas más de 3 artículos, la IA aplica −3.4% extra.'],
-  ['🕒 Cancelaciones (24h)','Puedes cancelar tu compra dentro de las 24 h posteriores al pago. Se te devuelve el dinero restando el 2% por comisión.'],
-  ['🎉 Fechas importantes','La tienda cambia su diseño en Halloween, 14 de Febrero, Madres, Padres, Fin de año y Black Friday.'],
+  ['📝 Inscribirse / Nuevo Cliente','Para registrarte realiza tu primera compra llenando tus datos en el carrito.'],
+  ['⚡ Compra rápida y Envío exprés','Normal (15-30 días) +3%. Compra exprés (5-8 días) +8%.'],
+  ['🏷️ Cupones y Descuentos','Cupón AETHERIA (−2%). Gastos >100 USDT con >3 artículos aplican −3.4% extra.'],
+  ['🕒 Cancelaciones (24h)','Puedes cancelar dentro de las 24h posteriores al pago con devolución del 98%.'],
+  ['🎉 Fechas importantes','La tienda cambia de ambiente automáticamente según la festividad.'],
   ['▶ Tour Guiado Paso a Paso']
 ],
 en:[
-  ['📝 Register / New Customer','To register just place your first order by entering your Name, Age and Address in the cart.'],
-  ['⚡ Fast buy & Express Shipping','Standard (15-30 days) adds 3% delivery tax. Express fast buy (5-8 days) adds 8%.'],
-  ['🏷️ Coupons & Discounts','Use coupon AETHERIA for −2%. If you spend over 100 USDT with more than 3 items, AI applies −3.4% off.'],
-  ['🕒 Cancellations (24h)','You may cancel within 24 hours of payment; refunded minus a 2% fee.'],
-  ['🎉 Special Dates','The store changes theme on Halloween, Valentine’s, Mother’s/Father’s Day, New Year and Black Friday.'],
+  ['📝 Register / New Customer','To register place your first order filling your data in the cart.'],
+  ['⚡ Fast buy & Express Shipping','Standard (15-30 days) +3%. Express (5-8 days) +8%.'],
+  ['🏷️ Coupons & Discounts','Coupon AETHERIA (−2%). Orders >100 USDT with >3 items get −3.4% off.'],
+  ['🕒 Cancellations (24h)','You may cancel within 24h of payment with a 98% refund.'],
+  ['🎉 Special Dates','The store changes theme automatically for holidays.'],
   ['▶ Guided Tour Step-by-Step']
 ]
 };
@@ -543,9 +557,9 @@ en:[
 const TS=[
   ['#q','1. Busca por producto, color, sexo o talla.','1. Search by product, color, gender or size.'],
   ['#nav','2. Elige una categoría en el menú superior.','2. Choose a category from the top menu.'],
-  ['#grid article','3. Haz clic sobre cualquier imagen para ver detalles, elegir tallas/colores y presionar «Añadir».','3. Click any image to view details, choose size/color and press “Add”.'],
-  ['#cartBtn','4. Abre tu carrito para ver productos, modificar cantidades o retirar artículos.','4. Open your cart to check items, change quantities or remove items.'],
-  ['#wallet','5. Ingresa tus datos, escanea el QR o copia la billetera USDT (TRC20), realiza el pago y obtén tu recibo.','5. Fill your details, scan the QR or copy USDT wallet (TRC20), pay and get your receipt.']
+  ['#grid article','3. Haz clic sobre cualquier imagen para ver detalles y añadir al carrito.','3. Click any image to view details and add to cart.'],
+  ['#cartBtn','4. Abre tu carrito para revisar productos e impuestos.','4. Open your cart to check items and taxes.'],
+  ['#wallet','5. Ingresa tus datos, escanea el QR o copia la billetera USDT y paga.','5. Fill your details, scan QR or copy USDT wallet and pay.']
 ];
 
 function botOpen(){$('#bp').classList.toggle('hidden');botMenu()}
