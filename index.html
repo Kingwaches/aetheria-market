@@ -547,54 +547,47 @@ function tour(i){
   $('#bm').innerHTML=`<p><b>Paso ${i+1} de ${TS.length}:</b> ${TS[i][L==='es'?1:2]}</p>`;
   $('#bq').innerHTML=`<div class="flex gap-2"><button class="btn flex-1" onclick="tour(${i+1})">${i<4?'Siguiente →':'Finalizar ✓'}</button><button class="opt" onclick="botMenu()">Salir</button></div>`;
 }
+    function dynamicWholesaleSearch(keyword) {
+        const query = keyword.toLowerCase().trim();
+        const grid = document.getElementById('product-grid');
+        if (!grid || !query) return;
+
+        grid.innerHTML = `
+            <div style="grid-column: 1/-1; margin-bottom: 15px; padding: 10px; background: #0F172A; border-radius: 8px; color: #38BDF8; font-size: 0.9rem;">
+                🔍 Mostrando resultados de la red mayorista para: <strong>"${keyword}"</strong> (Precios actualizados con tu margen e impuestos)
+            </div>
+        `;
+
+        const sampleResults = [
+            { title: `${keyword.toUpperCase()} - Modelo Urbano Clásico`, baseCost: 4.50, img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300' },
+            { title: `${keyword.toUpperCase()} - Edición Deportiva Pro`, baseCost: 6.80, img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=300' },
+            { title: `${keyword.toUpperCase()} - Estilo Casual Premium`, baseCost: 5.20, img: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=300' }
+        ];
+
+        sampleResults.forEach((item) => {
+            const mySellPrice = (item.baseCost * 2.0).toFixed(2);
+            const originalPrice = (mySellPrice * 1.35).toFixed(2);
+
+            grid.innerHTML += `
+                <div class="product-card" style="border: 1px solid #334155; padding: 15px; border-radius: 12px; background: #1E293B; text-align: center;">
+                    <img src="${item.img}" alt="${item.title}" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px;">
+                    <h4 style="margin: 10px 0; color: #F8FAFC; font-size: 1rem;">${item.title}</h4>
+                    <div style="margin: 8px 0;">
+                        <span style="font-size: 1.1rem; font-weight: bold; color: #10B981;">${mySellPrice} USDT</span>
+                        <span style="text-decoration: line-through; color: #64748B; font-size: 0.85rem; margin-left: 6px;">${originalPrice} USDT</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #94A3B8;">Proveedor Mayorista | Encargo Directo</p>
+                    <button onclick="alert('Encargo seleccionado para pagar en USDT o Transfermóvil.')" style="background: #7C3AED; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 8px; font-size: 0.9rem;">
+                        🛒 Comprar por Encargo (${mySellPrice} USDT)
+                    </button>
+                </div>
+            `;
+        });
+    }
 
 load();
 </script>
 </body>
 </html>
-        // ... (Todo el código HTML y JavaScript que ya tienes en tu página) ...
-
-        // -------------------------------------------------------------
-        // CÓDIGO DE BÚSQUEDA DINÁMICA AL POR MAYOR (AGREGAR AQUÍ ABAJO)
-        // -------------------------------------------------------------
-        function dynamicWholesaleSearch(keyword) {
-            const query = keyword.toLowerCase().trim();
-            const grid = document.getElementById('product-grid');
-            if (!grid || !query) return;
-
-            grid.innerHTML = `
-                <div style="grid-column: 1/-1; margin-bottom: 15px; padding: 10px; background: #0F172A; border-radius: 8px; color: #38BDF8; font-size: 0.9rem;">
-                    🔍 Mostrando resultados de la red mayorista para: <strong>"${keyword}"</strong> (Precios actualizados con tu margen e impuestos)
-                </div>
-            `;
-
-            const sampleResults = [
-                { title: `${keyword.toUpperCase()} - Modelo Urbano Clásico`, baseCost: 4.50, img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300' },
-                { title: `${keyword.toUpperCase()} - Edición Deportiva Pro`, baseCost: 6.80, img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=300' },
-                { title: `${keyword.toUpperCase()} - Estilo Casual Premium`, baseCost: 5.20, img: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=300' }
-            ];
-
-            sampleResults.forEach((item) => {
-                const mySellPrice = (item.baseCost * 2.0).toFixed(2);
-                const originalPrice = (mySellPrice * 1.35).toFixed(2);
-
-                grid.innerHTML += `
-                    <div class="product-card" style="border: 1px solid #334155; padding: 15px; border-radius: 12px; background: #1E293B; text-align: center;">
-                        <img src="${item.img}" alt="${item.title}" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px;">
-                        <h4 style="margin: 10px 0; color: #F8FAFC; font-size: 1rem;">${item.title}</h4>
-                        <div style="margin: 8px 0;">
-                            <span style="font-size: 1.1rem; font-weight: bold; color: #10B981;">${mySellPrice} USDT</span>
-                            <span style="text-decoration: line-through; color: #64748B; font-size: 0.85rem; margin-left: 6px;">${originalPrice} USDT</span>
-                        </div>
-                        <p style="font-size: 0.75rem; color: #94A3B8;">Proveedor Mayorista | Encargo Directo</p>
-                        <button onclick="alert('Encargo seleccionado para pagar en USDT o Transfermóvil.')" style="background: #7C3AED; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 8px; font-size: 0.9rem;">
-                            🛒 Comprar por Encargo (${mySellPrice} USDT)
-                        </button>
-                    </div>
-                `;
-            });
-        }
-    </script>
-</body>
-</html>
-
+               
+    
